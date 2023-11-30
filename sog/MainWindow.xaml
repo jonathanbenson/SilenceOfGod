@@ -8,7 +8,7 @@
         Title="MainWindow" Height="800" Width="600" MinWidth="300" MinHeight="300">
     <Grid>
         <!-- Header for the book name -->
-        <TextBlock Text="Genesis"
+        <TextBlock Text="Genesis 1"
                    FontSize="20"
                    FontWeight="Bold"
                    HorizontalAlignment="Center"
@@ -17,8 +17,8 @@
         <!-- Scrollable area for verses -->
         <StackPanel Margin="10,40,10,10">
             <!-- Sample verses with text wrapping -->
-            <TextBlock TextWrapping="Wrap" Text="1:1 In the beginning God created the heavens and the earth." Margin="5"/>
-            <TextBlock TextWrapping="Wrap" Text="1:2 Now the earth was formless and empty, darkness was over the surface of the deep, and the Spirit of God was hovering over the waters." Margin="5"/>
+            <TextBlock TextWrapping="Wrap" Text="1 In the beginning God created the heavens and the earth." Margin="5"/>
+            <TextBlock TextWrapping="Wrap" Text="2 Now the earth was formless and empty, darkness was over the surface of the deep, and the Spirit of God was hovering over the waters." Margin="5"/>
             <!-- Add more verses here with TextWrapping="Wrap" -->
         </StackPanel>
 
