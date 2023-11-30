@@ -1,3 +1,5 @@
+# Source: https://github.com/dotnet/core/blob/main/.gitignore
+
 *.swp
 *.*~
 project.lock.json
