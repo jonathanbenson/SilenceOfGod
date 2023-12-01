@@ -16,6 +16,15 @@ public class BookBuilderTest
         Book exodus = bb.Build(Path.Join("bible", "Exodus.json"));
         Book leviticus = bb.Build(Path.Join("bible", "Leviticus.json"));
 
+        AssertFirst3Books(genesis, exodus, leviticus);
+    }
+
+    public void AssertFirst3Books(Book genesis, Book exodus, Book leviticus)
+    {
+        Assert.AreEqual("Genesis", genesis.book);
+        Assert.AreEqual("Exodus", exodus.book);
+        Assert.AreEqual("Leviticus", leviticus.book);
+
         Assert.AreEqual(50, genesis.chapters.Count);
         Assert.AreEqual(40, exodus.chapters.Count);
         Assert.AreEqual(27, leviticus .chapters.Count);
@@ -27,6 +36,6 @@ public class BookBuilderTest
         Assert.AreEqual(genesis11, genesis.chapters[0].verses[0].text);
         Assert.AreEqual(exodus11, exodus.chapters[0].verses[0].text);
         Assert.AreEqual(leviticus11, leviticus.chapters[0].verses[0].text);
-        
     }
+
 }
