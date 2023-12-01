@@ -8,22 +8,67 @@
         Title="MainWindow" Height="800" Width="600" MinHeight="800" MinWidth="600" MaxHeight="800" MaxWidth="600" >
     <DockPanel>
 
-        <StackPanel DockPanel.Dock="Top">
-            <TextBlock Text="Genesis 1"
-                    FontSize="20"
-                    FontWeight="Bold"
-                    HorizontalAlignment="Center"
-                    Margin="10,10,10,5"/>
-            <Separator/>
+        <Grid DockPanel.Dock="Top">
+
+            <CheckBox x:Name="VoiceMode"
+                IsChecked="False"
+                HorizontalAlignment="Left"
+                Checked="HandleVoiceModeChecked"
+                Unchecked="HandleVoiceModeUnchecked"
+                Margin="5">Voice Mode</CheckBox>
+
+            <StackPanel HorizontalAlignment="Center">
+                <TextBlock Text="Genesis 1"
+                        FontSize="20"
+                        FontWeight="Bold"
+                        HorizontalAlignment="Center"
+                        Margin="10,10,10,5"/>
+                <Separator/>
+            </StackPanel>
+        </Grid>
+
+        <StackPanel x:Name="NonVoiceControls" DockPanel.Dock="Bottom">
+
+            <Separator />
+
+            <DockPanel Margin="10">
+
+                <Button DockPanel.Dock="Left"
+                    VerticalAlignment="Bottom"
+                    x:Name="LastPageButton"
+                    Padding="5">Last Page</Button>
+
+                <Button DockPanel.Dock="Right"
+                    VerticalAlignment="Bottom"
+                    x:Name="NextPageButton"
+                    Padding="5">Next Page</Button>
+
+                <Grid VerticalAlignment="Center">
+
+                    <WrapPanel HorizontalAlignment="Center">
+                        <StackPanel Margin="5,0,5,0">
+                            <TextBlock>Book</TextBlock>
+                            <ComboBox ItemsSource="{Binding Books}" SelectedValue="Genesis" />
+                        </StackPanel>
+                        <StackPanel Margin="5,0,5,0">
+                            <TextBlock>Chapter</TextBlock>
+                            <ComboBox ItemsSource="{Binding Chapters}" SelectedValue="1" />
+                        </StackPanel>
+                        <StackPanel Margin="5,0,5,0">
+                            <TextBlock>Verse</TextBlock>
+                            <ComboBox ItemsSource="{Binding Verses}" SelectedValue="1" />
+                        </StackPanel>
+                        <Button Margin="5,0,5,0" Padding="5" VerticalAlignment="Bottom">Search</Button>
+                    </WrapPanel>
+                </Grid>
+            </DockPanel>
         </StackPanel>
 
-        <StackPanel DockPanel.Dock="Bottom">
+        <StackPanel x:Name="VoiceControls" Visibility="Collapsed" DockPanel.Dock="Bottom">
             <Separator />
-            <DockPanel>
-                <TextBlock DockPanel.Dock="Left" x:Name="NextPageMessage" Text="Say 'help' for instructions"
-                    Margin="10" />
-                <TextBlock DockPanel.Dock="Right" x:Name="NextPageMessage1" Text="Say 'next page' to flip the page, or 'last page' to go back"
-                    Margin="10" />
+            <DockPanel Margin="10">
+                <TextBlock DockPanel.Dock="Left" x:Name="NextPageMessage" Text="Say 'help' for instructions" />
+                <TextBlock DockPanel.Dock="Right" x:Name="NextPageMessage1" Text="Say 'next page' to flip the page, or 'last page' to go back" />
                 <TextBlock Text="" />
             </DockPanel>
         </StackPanel>

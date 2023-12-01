@@ -33,6 +33,27 @@ namespace sog
 
             Bible = bibleBuilderService.Build("bible");
 
+            DataContext = new {
+                
+                Books = Bible.books.Select((book) => book.book),
+                Chapters = Bible.books[0].chapters.Select((chapter) => chapter.chapter),
+                Verses = Bible.books[0].chapters[0].verses.Select((verse) => verse.verse)
+
+            };
+
         }
+
+        private void HandleVoiceModeChecked(object sender, RoutedEventArgs e)
+        {
+            VoiceControls.Visibility = Visibility.Visible;
+            NonVoiceControls.Visibility = Visibility.Collapsed;
+        }
+
+        private void HandleVoiceModeUnchecked(object sender, RoutedEventArgs e)
+        {
+            VoiceControls.Visibility = Visibility.Collapsed;
+            NonVoiceControls.Visibility = Visibility.Visible;
+        }
+
     }
 }
