@@ -22,14 +22,16 @@ namespace sog
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        private Bible Bible;
+
         public MainWindow()
         {
             InitializeComponent();
 
-            BibleBuilderService bbs = new BibleBuilderService();
+            BibleBuilder bibleBuilderService = new BibleBuilder();
 
-            Bible b = bbs.Build("bible");
-
+            Bible = bibleBuilderService.Build("bible");
 
         }
     }
