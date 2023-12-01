@@ -55,5 +55,15 @@ namespace sog
             NonVoiceControls.Visibility = Visibility.Visible;
         }
 
+        private void HandleBooksSelectionChanged(object sender, RoutedEventArgs e)
+        {
+            // TODO
+        }
+
+        private void HandleChaptersSelectionChanged(object sender, RoutedEventArgs e)
+        {
+            // TODO
+        }
+
     }
 }
