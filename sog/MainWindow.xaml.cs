@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
+using sog.src.model;
 
 namespace sog
 {
@@ -23,6 +25,12 @@ namespace sog
         public MainWindow()
         {
             InitializeComponent();
+
+            BibleBuilderService bbs = new BibleBuilderService();
+
+            Bible b = bbs.Build("bible");
+
+
         }
     }
 }
