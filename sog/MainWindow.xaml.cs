@@ -29,6 +29,7 @@ namespace sog
         private Bible Bible;
 
         private string _Header = "";
+        private List<string> _Page = new List<string>();
 
         private List<string> _Books = new List<string>();
         private List<string> _Chapters = new List<string>();
@@ -44,6 +45,19 @@ namespace sog
             {
                 _Header = value;
                 NotifyPropertyChanged("Header");
+            }
+        }
+
+        public List<string> Page
+        {
+            get
+            {
+                return _Page;
+            }
+            set
+            {
+                _Page = value;
+                NotifyPropertyChanged("Page");
             }
         }
 
@@ -99,6 +113,7 @@ namespace sog
             Chapters = Bible.books[0].chapters.Select((chapter) => chapter.chapter).ToList();
             Verses = Bible.books[0].chapters[0].verses.Select((verse) => verse.verse).ToList();
 
+            Page = Bible.books[0].chapters[0].verses.Select((verse) => verse.verse + "    " + verse.text).ToList();
 
         }
 
@@ -148,12 +163,18 @@ namespace sog
                 Verses = selectedChapter.verses.Select(v => v.verse).ToList();
                 
                 Header = $"{selectedBook.book} {selectedChapter.chapter}";
+                Page = Bible.books[BooksCombo.SelectedIndex].chapters[ChaptersCombo.SelectedIndex].verses.Select((verse) => verse.verse + "    " + verse.text).ToList();
 
                 if (Verses.Any())
                 {
                     VersesCombo.SelectedIndex = 0;
                 }
             }
+        }
+
+        private void HandleVerseChange()
+        {
+            // TODO
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

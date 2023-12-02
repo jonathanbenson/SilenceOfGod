@@ -74,8 +74,13 @@
         </StackPanel>
 
         <StackPanel Margin="15,10,15,10">
-            <TextBlock TextWrapping="Wrap" Text="1 In the beginning God created the heavens and the earth." Margin="0,0,0,5"/>
-            <TextBlock TextWrapping="Wrap" Text="2 Now the earth was formless and empty, darkness was over the surface of the deep, and the Spirit of God was hovering over the waters." Margin="0,0,0,5"/>
+            <ItemsControl Name="PageItems" ItemsSource="{Binding Page}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding}" Margin="0,0,0,5"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </StackPanel>
 
     </DockPanel>
