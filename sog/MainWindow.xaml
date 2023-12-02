@@ -48,15 +48,15 @@
                     <WrapPanel HorizontalAlignment="Center">
                         <StackPanel Margin="5,0,5,0">
                             <TextBlock>Book</TextBlock>
-                            <ComboBox ItemsSource="{Binding Books}" SelectedValue="Genesis" />
+                            <ComboBox x:Name="BooksCombo" SelectionChanged="HandleBooksComboSelectionChanged" ItemsSource="{Binding Books}" SelectedIndex="0" />
                         </StackPanel>
                         <StackPanel Margin="5,0,5,0">
                             <TextBlock>Chapter</TextBlock>
-                            <ComboBox ItemsSource="{Binding Chapters}" SelectedValue="1" />
+                            <ComboBox x:Name="ChaptersCombo" SelectionChanged="HandleChaptersComboSelectionChanged" ItemsSource="{Binding Chapters}" SelectedIndex="0" />
                         </StackPanel>
                         <StackPanel Margin="5,0,5,0">
                             <TextBlock>Verse</TextBlock>
-                            <ComboBox ItemsSource="{Binding Verses}" SelectedValue="1" />
+                            <ComboBox x:Name="VersesCombo" ItemsSource="{Binding Verses}" SelectedIndex="0" />
                         </StackPanel>
                         <Button Margin="5,0,5,0" Padding="5" VerticalAlignment="Bottom">Search</Button>
                     </WrapPanel>

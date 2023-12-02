@@ -14,32 +14,75 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
 using sog.src.model;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace sog
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
 
         private Bible Bible;
+
+        private List<string> _Books = new List<string>();
+        private List<string> _Chapters = new List<string>();
+        private List<string> _Verses = new List<string>();
+
+        public List<string> Books
+        {
+            get
+            {
+                return _Books;
+            }
+            set
+            {
+                _Books = value;
+                NotifyPropertyChanged("Books");
+            }
+        }
+        public List<string> Chapters
+        {
+            get
+            {
+                return _Chapters;
+            }
+            set
+            {
+                _Chapters = value;
+                NotifyPropertyChanged("Chapters");
+            }
+        }
+        public List<string> Verses
+        {
+            get
+            {
+                return _Verses;
+            }
+            set
+            {
+                _Verses = value;
+                NotifyPropertyChanged("Verses");
+            }
+        }
+
 
         public MainWindow()
         {
             InitializeComponent();
 
+            DataContext = this;
+
             BibleBuilder bibleBuilderService = new BibleBuilder();
 
             Bible = bibleBuilderService.Build("bible");
 
-            DataContext = new {
-                
-                Books = Bible.books.Select((book) => book.book),
-                Chapters = Bible.books[0].chapters.Select((chapter) => chapter.chapter),
-                Verses = Bible.books[0].chapters[0].verses.Select((verse) => verse.verse)
+            Books = Bible.books.Select((book) => book.book).ToList();
+            Chapters = Bible.books[0].chapters.Select((chapter) => chapter.chapter).ToList();
+            Verses = Bible.books[0].chapters[0].verses.Select((verse) => verse.verse).ToList();
 
-            };
 
         }
 
@@ -55,15 +98,27 @@ namespace sog
             NonVoiceControls.Visibility = Visibility.Visible;
         }
 
-        private void HandleBooksSelectionChanged(object sender, RoutedEventArgs e)
+        private void HandleBooksComboSelectionChanged(object sender, RoutedEventArgs e)
         {
-            // TODO
+            Book book = Bible.books[BooksCombo.SelectedIndex];
+
+            Chapters = book.chapters.Select((chapter) => chapter.chapter).ToList();
+            ChaptersCombo.SelectedIndex = 0;
         }
 
-        private void HandleChaptersSelectionChanged(object sender, RoutedEventArgs e)
+        private void HandleChaptersComboSelectionChanged(object sender, RoutedEventArgs e)
         {
-            // TODO
+            Chapter chapter = Bible.books[BooksCombo.SelectedIndex].chapters[ChaptersCombo.SelectedIndex];
+        
+            Verses = chapter.verses.Select((verse) => verse.verse).ToList();
+            VersesCombo.SelectedIndex = 0;
         }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")  
+        {  
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }  
 
     }
 }
