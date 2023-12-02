@@ -16,6 +16,7 @@ using System.Diagnostics;
 using sog.src.model;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Configuration;
 
 namespace sog
 {
@@ -27,9 +28,24 @@ namespace sog
 
         private Bible Bible;
 
+        private string _Header = "";
+
         private List<string> _Books = new List<string>();
         private List<string> _Chapters = new List<string>();
         private List<string> _Verses = new List<string>();
+
+        public string Header
+        {
+            get
+            {
+                return _Header;
+            }
+            set
+            {
+                _Header = value;
+                NotifyPropertyChanged("Header");
+            }
+        }
 
         public List<string> Books
         {
@@ -113,7 +129,7 @@ namespace sog
         {
             if (BooksCombo.SelectedIndex >= 0)
             {
-                var selectedBook = Bible.books[BooksCombo.SelectedIndex];
+                Book selectedBook = Bible.books[BooksCombo.SelectedIndex];
                 Chapters = selectedBook.chapters.Select(c => c.chapter).ToList();
 
                 if (Chapters.Any())
@@ -127,9 +143,12 @@ namespace sog
         {
             if (BooksCombo.SelectedIndex >= 0 && ChaptersCombo.SelectedIndex >= 0)
             {
-                var selectedChapter = Bible.books[BooksCombo.SelectedIndex].chapters[ChaptersCombo.SelectedIndex];
+                Book selectedBook = Bible.books[BooksCombo.SelectedIndex];
+                Chapter selectedChapter = Bible.books[BooksCombo.SelectedIndex].chapters[ChaptersCombo.SelectedIndex];
                 Verses = selectedChapter.verses.Select(v => v.verse).ToList();
                 
+                Header = $"{selectedBook.book} {selectedChapter.chapter}";
+
                 if (Verses.Any())
                 {
                     VersesCombo.SelectedIndex = 0;
