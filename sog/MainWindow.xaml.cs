@@ -100,18 +100,41 @@ namespace sog
 
         private void HandleBooksComboSelectionChanged(object sender, RoutedEventArgs e)
         {
-            Book book = Bible.books[BooksCombo.SelectedIndex];
-
-            Chapters = book.chapters.Select((chapter) => chapter.chapter).ToList();
-            ChaptersCombo.SelectedIndex = 0;
+            HandleBookChange();
+            HandleChapterChange();
         }
 
         private void HandleChaptersComboSelectionChanged(object sender, RoutedEventArgs e)
         {
-            Chapter chapter = Bible.books[BooksCombo.SelectedIndex].chapters[ChaptersCombo.SelectedIndex];
-        
-            Verses = chapter.verses.Select((verse) => verse.verse).ToList();
-            VersesCombo.SelectedIndex = 0;
+            HandleChapterChange();
+        }
+
+        private void HandleBookChange()
+        {
+            if (BooksCombo.SelectedIndex >= 0)
+            {
+                var selectedBook = Bible.books[BooksCombo.SelectedIndex];
+                Chapters = selectedBook.chapters.Select(c => c.chapter).ToList();
+
+                if (Chapters.Any())
+                {
+                    ChaptersCombo.SelectedIndex = 0;
+                }
+            }
+        }
+
+        private void HandleChapterChange()
+        {
+            if (BooksCombo.SelectedIndex >= 0 && ChaptersCombo.SelectedIndex >= 0)
+            {
+                var selectedChapter = Bible.books[BooksCombo.SelectedIndex].chapters[ChaptersCombo.SelectedIndex];
+                Verses = selectedChapter.verses.Select(v => v.verse).ToList();
+                
+                if (Verses.Any())
+                {
+                    VersesCombo.SelectedIndex = 0;
+                }
+            }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
