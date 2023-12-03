@@ -191,7 +191,7 @@ namespace sog
             }
         }
 
-        private void LoadPage(int bookIndex, int chapterIndex, int verseIndex, int nVerses)
+        private List<Verse> LoadPage(int bookIndex, int chapterIndex, int verseIndex, int nVerses)
         {
 
             Book selectedBook = Bible.books[bookIndex];
@@ -201,11 +201,20 @@ namespace sog
             Header = $"{selectedBook.book} {selectedChapter.chapter}";
 
             Page.Clear();
+
+            List<Verse> verses = new List<Verse>();
+
             for (int i = verseIndex; i < verseIndex + nVerses && i < selectedChapter.verses.Count; i++)
-                Page.Add(selectedChapter.verses[i].verse + "    " + selectedChapter.verses[i].text);
+            {
+                Verse v = selectedChapter.verses[i];
+                Page.Add(v.verse + "    " + v.text);
+                verses.Append(v);
+            }
 
             StartVerseIndex = verseIndex;
             EndVerseIndex = verseIndex + nVerses - 1;
+
+            return verses;
         }
 
         private void HandleVerseChange()
