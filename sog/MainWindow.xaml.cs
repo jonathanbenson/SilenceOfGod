@@ -195,8 +195,6 @@ namespace sog
                 Chapter selectedChapter = Bible.books[bookIndex].chapters[chapterIndex];
                 Verses = selectedChapter.verses.Select(v => v.verse).ToList();
                 
-                Header = $"{selectedBook.book} {selectedChapter.chapter}";
-
                 LoadPage(bookIndex, chapterIndex, 0);
 
                 if (Verses.Any())
