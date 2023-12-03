@@ -17,6 +17,7 @@ using sog.src.model;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Configuration;
+using System.Collections.ObjectModel;
 
 namespace sog
 {
@@ -26,10 +27,13 @@ namespace sog
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
 
+        private int StartVerseIndex = 0;
+        private int EndVerseIndex = 0;
+
         private Bible Bible;
 
         private string _Header = "";
-        private List<string> _Page = new List<string>();
+        public ObservableCollection<string> _Page = new ObservableCollection<string>();
 
         private List<string> _Books = new List<string>();
         private List<string> _Chapters = new List<string>();
@@ -48,7 +52,7 @@ namespace sog
             }
         }
 
-        public List<string> Page
+        public ObservableCollection<string> Page
         {
             get
             {
@@ -57,7 +61,6 @@ namespace sog
             set
             {
                 _Page = value;
-                NotifyPropertyChanged("Page");
             }
         }
 
@@ -113,8 +116,8 @@ namespace sog
             Chapters = Bible.books[0].chapters.Select((chapter) => chapter.chapter).ToList();
             Verses = Bible.books[0].chapters[0].verses.Select((verse) => verse.verse).ToList();
 
-            Page = Bible.books[0].chapters[0].verses.Select((verse) => verse.verse + "    " + verse.text).ToList();
-
+            StartVerseIndex = 0;
+            EndVerseIndex = 9;
         }
 
         private void HandleVoiceModeChecked(object sender, RoutedEventArgs e)
@@ -140,6 +143,35 @@ namespace sog
             HandleChapterChange();
         }
 
+        private void HandleNextPageButtonClicked(object sender, RoutedEventArgs e)
+        {
+            NextPage();
+        }
+
+        private bool NextPage()
+        {
+
+            Chapter selectedChapter = Bible.books[BooksCombo.SelectedIndex].chapters[ChaptersCombo.SelectedIndex];
+
+            if (EndVerseIndex == selectedChapter.verses.Count - 1)
+                return false;
+
+            Page.Clear();
+
+            StartVerseIndex = EndVerseIndex + 1;
+
+            int count = 0;
+            for (int i = StartVerseIndex; i < StartVerseIndex + 10 && i < selectedChapter.verses.Count; i++)
+            {
+                Page.Add(selectedChapter.verses[i].verse + "    " + selectedChapter.verses[i].text);
+                count++;
+            }
+
+            EndVerseIndex = StartVerseIndex + count - 1;
+
+            return true;
+        }
+
         private void HandleBookChange()
         {
             if (BooksCombo.SelectedIndex >= 0)
@@ -163,7 +195,13 @@ namespace sog
                 Verses = selectedChapter.verses.Select(v => v.verse).ToList();
                 
                 Header = $"{selectedBook.book} {selectedChapter.chapter}";
-                Page = Bible.books[BooksCombo.SelectedIndex].chapters[ChaptersCombo.SelectedIndex].verses.Select((verse) => verse.verse + "    " + verse.text).ToList();
+
+                Page.Clear();
+                for (int i = 0; i < 10; i++)
+                    Page.Add(selectedChapter.verses[i].verse + "    " + selectedChapter.verses[i].text);
+
+                StartVerseIndex = 0;
+                EndVerseIndex = 9;
 
                 if (Verses.Any())
                 {
