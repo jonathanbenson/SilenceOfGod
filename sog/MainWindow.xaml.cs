@@ -148,14 +148,21 @@ namespace sog
 
         private void NextPage()
         {
+            int bookIndex = BooksCombo.SelectedIndex;
+            int chapterIndex = ChaptersCombo.SelectedIndex;
 
-            Chapter selectedChapter = Bible.books[BooksCombo.SelectedIndex].chapters[ChaptersCombo.SelectedIndex];
-
-            if (StartVerseIndex >= selectedChapter.verses.Count - 10)
-                return;
+            Chapter selectedChapter = Bible.books[bookIndex].chapters[chapterIndex];
 
             if (EndVerseIndex == selectedChapter.verses.Count - 1)
-                return;
+            {
+                if (bookIndex == Bible.books.Count - 1)
+                    return;
+
+                if (chapterIndex == Bible.books[bookIndex].chapters.Count - 1)
+                    HandleBookChange(bookIndex + 1);
+                else
+                    HandleChapterChange(bookIndex, chapterIndex + 1);
+            }
             else
                 LoadPage(BooksCombo.SelectedIndex, ChaptersCombo.SelectedIndex, EndVerseIndex + 1);
 
@@ -165,6 +172,8 @@ namespace sog
         {
             if (bookIndex >= 0)
             {
+                BooksCombo.SelectedIndex = bookIndex;
+
                 Book selectedBook = Bible.books[bookIndex];
                 Chapters = selectedBook.chapters.Select(c => c.chapter).ToList();
 
@@ -180,6 +189,8 @@ namespace sog
         {
             if (bookIndex >= 0 && chapterIndex >= 0)
             {
+                ChaptersCombo.SelectedIndex = chapterIndex;
+
                 Book selectedBook = Bible.books[bookIndex];
                 Chapter selectedChapter = Bible.books[bookIndex].chapters[chapterIndex];
                 Verses = selectedChapter.verses.Select(v => v.verse).ToList();
