@@ -73,14 +73,16 @@
             </DockPanel>
         </StackPanel>
 
-        <StackPanel Margin="15,10,15,10">
-            <ItemsControl Name="PageItems" ItemsSource="{Binding Page}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock FontSize="16" TextWrapping="Wrap" Text="{Binding}" Margin="0,0,0,5"/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+        <StackPanel x:Name="PageContainer" Margin="15,10,15,10">
+            <StackPanel x:Name="PageItems">
+                <ItemsControl ItemsSource="{Binding Page}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock FontSize="16" TextWrapping="Wrap" Text="{Binding}" Margin="0,0,0,5"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
         </StackPanel>
 
     </DockPanel>

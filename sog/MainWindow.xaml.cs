@@ -18,6 +18,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Configuration;
 using System.Collections.ObjectModel;
+using System.Windows.Threading;
 
 namespace sog
 {
@@ -153,7 +154,10 @@ namespace sog
             if (StartVerseIndex >= selectedChapter.verses.Count - 10)
                 return;
 
-            LoadPage(BooksCombo.SelectedIndex, ChaptersCombo.SelectedIndex, EndVerseIndex + 1, 10);
+            if (EndVerseIndex == selectedChapter.verses.Count - 1)
+                return;
+            else
+                LoadPage(BooksCombo.SelectedIndex, ChaptersCombo.SelectedIndex, EndVerseIndex + 1);
 
         }
 
@@ -182,7 +186,7 @@ namespace sog
                 
                 Header = $"{selectedBook.book} {selectedChapter.chapter}";
 
-                LoadPage(bookIndex, chapterIndex, 0, 10);
+                LoadPage(bookIndex, chapterIndex, 0);
 
                 if (Verses.Any())
                 {
@@ -191,31 +195,46 @@ namespace sog
             }
         }
 
-        private List<Verse> LoadPage(int bookIndex, int chapterIndex, int verseIndex, int nVerses)
+        private List<Verse> LoadPage(int bookIndex, int chapterIndex, int verseIndex)
         {
-
             Book selectedBook = Bible.books[bookIndex];
             Chapter selectedChapter = Bible.books[bookIndex].chapters[chapterIndex];
             Verses = selectedChapter.verses.Select(v => v.verse).ToList();
-            
+
             Header = $"{selectedBook.book} {selectedChapter.chapter}";
 
             Page.Clear();
 
             List<Verse> verses = new List<Verse>();
 
-            for (int i = verseIndex; i < verseIndex + nVerses && i < selectedChapter.verses.Count; i++)
-            {
-                Verse v = selectedChapter.verses[i];
-                Page.Add(v.verse + "    " + v.text);
-                verses.Append(v);
-            }
+            PageItems.UpdateLayout();
+            PageContainer.UpdateLayout();
 
-            StartVerseIndex = verseIndex;
-            EndVerseIndex = verseIndex + nVerses - 1;
+            Dispatcher.Invoke(() =>
+            {
+                for (int i = verseIndex; PageItems.ActualHeight < PageContainer.ActualHeight && i < selectedChapter.verses.Count; i++)
+                {
+                    Verse v = selectedChapter.verses[i];
+                    Page.Add(v.verse + "    " + v.text);
+                    verses.Add(v);
+
+                    PageItems.UpdateLayout();
+                    PageContainer.UpdateLayout();
+                }
+
+                if (Page.Count > 0 && verseIndex + Page.Count < selectedChapter.verses.Count)
+                {
+                    Page.RemoveAt(Page.Count - 1);
+                }
+
+                StartVerseIndex = verseIndex;
+                EndVerseIndex = verseIndex + Page.Count - 1;
+
+            }, DispatcherPriority.Loaded);
 
             return verses;
         }
+
 
         private void HandleVerseChange()
         {
