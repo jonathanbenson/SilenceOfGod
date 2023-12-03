@@ -134,13 +134,12 @@ namespace sog
 
         private void HandleBooksComboSelectionChanged(object sender, RoutedEventArgs e)
         {
-            HandleBookChange();
-            HandleChapterChange();
+            HandleBookChange(BooksCombo.SelectedIndex);
         }
 
         private void HandleChaptersComboSelectionChanged(object sender, RoutedEventArgs e)
         {
-            HandleChapterChange();
+            HandleChapterChange(BooksCombo.SelectedIndex, ChaptersCombo.SelectedIndex);
         }
 
         private void HandleNextPageButtonClicked(object sender, RoutedEventArgs e)
@@ -172,26 +171,27 @@ namespace sog
             return true;
         }
 
-        private void HandleBookChange()
+        private void HandleBookChange(int bookIndex)
         {
-            if (BooksCombo.SelectedIndex >= 0)
+            if (bookIndex >= 0)
             {
-                Book selectedBook = Bible.books[BooksCombo.SelectedIndex];
+                Book selectedBook = Bible.books[bookIndex];
                 Chapters = selectedBook.chapters.Select(c => c.chapter).ToList();
 
                 if (Chapters.Any())
                 {
                     ChaptersCombo.SelectedIndex = 0;
+                    HandleChapterChange(bookIndex, 0);
                 }
             }
         }
 
-        private void HandleChapterChange()
+        private void HandleChapterChange(int bookIndex, int chapterIndex)
         {
-            if (BooksCombo.SelectedIndex >= 0 && ChaptersCombo.SelectedIndex >= 0)
+            if (bookIndex >= 0 && chapterIndex >= 0)
             {
-                Book selectedBook = Bible.books[BooksCombo.SelectedIndex];
-                Chapter selectedChapter = Bible.books[BooksCombo.SelectedIndex].chapters[ChaptersCombo.SelectedIndex];
+                Book selectedBook = Bible.books[bookIndex];
+                Chapter selectedChapter = Bible.books[bookIndex].chapters[chapterIndex];
                 Verses = selectedChapter.verses.Select(v => v.verse).ToList();
                 
                 Header = $"{selectedBook.book} {selectedChapter.chapter}";

@@ -59,7 +59,6 @@
                             <TextBlock>Verse</TextBlock>
                             <ComboBox x:Name="VersesCombo" ItemsSource="{Binding Verses}" SelectedIndex="0" />
                         </StackPanel>
-                        <Button Margin="5,0,5,0" Padding="5" VerticalAlignment="Bottom">Search</Button>
                     </WrapPanel>
                 </Grid>
             </DockPanel>
