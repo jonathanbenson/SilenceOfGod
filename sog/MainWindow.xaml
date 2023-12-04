@@ -78,7 +78,7 @@
                 <ItemsControl ItemsSource="{Binding Page}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock FontSize="16" TextWrapping="Wrap" Text="{Binding}" Margin="0,0,0,5"/>
+                            <TextBlock FontSize="16" TextWrapping="Wrap" Text="{Binding NumAndText}" Margin="0,0,0,5"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

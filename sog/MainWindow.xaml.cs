@@ -34,7 +34,7 @@ namespace sog
         private Bible Bible;
 
         private string _Header = "";
-        public ObservableCollection<string> _Page = new ObservableCollection<string>();
+        public ObservableCollection<Verse> _Page = new ObservableCollection<Verse>();
 
         private List<string> _Books = new List<string>();
         private List<string> _Chapters = new List<string>();
@@ -53,7 +53,7 @@ namespace sog
             }
         }
 
-        public ObservableCollection<string> Page
+        public ObservableCollection<Verse> Page
         {
             get
             {
@@ -224,7 +224,7 @@ namespace sog
                 for (int i = verseIndex; PageItems.ActualHeight < PageContainer.ActualHeight && i < selectedChapter.verses.Count; i++)
                 {
                     Verse v = selectedChapter.verses[i];
-                    Page.Add(v.verse + "    " + v.text);
+                    Page.Add(v);
                     verses.Add(v);
 
                     PageItems.UpdateLayout();
