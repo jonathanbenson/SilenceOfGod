@@ -266,12 +266,15 @@ namespace sog
             
             int start = 0;
 
+            PageContainer.UpdateLayout();
+
             for (int bookIndex = 0; bookIndex < Bible.books.Count; bookIndex++)
             {
                 for (int chapterIndex = 0; chapterIndex < Bible.books[bookIndex].chapters.Count; chapterIndex++)
                 {
 
                     Page.Clear();
+                    PageItems.UpdateLayout();
 
                     for (int verseIndex = 0; verseIndex < Bible.books[bookIndex].chapters[chapterIndex].verses.Count; verseIndex++)
                     {
@@ -287,6 +290,8 @@ namespace sog
                             start = verseIndex + 1;
                             Page.Clear();
                         }
+
+                        PageItems.UpdateLayout();
                     }
 
                     for (int i = start; i < Bible.books[bookIndex].chapters[chapterIndex].verses.Count; i++)
