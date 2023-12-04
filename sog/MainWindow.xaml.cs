@@ -22,6 +22,21 @@ using System.Windows.Threading;
 
 namespace sog
 {
+
+    public class PageKey
+    {
+        public int BookIndex { get; }
+        public int ChapterIndex { get; }
+        public int VerseIndex { get; }
+
+        public PageKey(int bookIndex, int chapterIndex, int verseIndex)
+        {
+            BookIndex = bookIndex;
+            ChapterIndex = chapterIndex;
+            VerseIndex = verseIndex;
+        }
+    }
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -32,6 +47,8 @@ namespace sog
         private int EndVerseIndex = 0;
 
         private Bible Bible;
+
+        Dictionary<PageKey, List<Verse>> PageLookup = new Dictionary<PageKey, List<Verse>>();
 
         private string _Header = "";
         public ObservableCollection<Verse> _Page = new ObservableCollection<Verse>();
@@ -244,6 +261,41 @@ namespace sog
             return verses;
         }
 
+        private void OnContentRendered(object sender, EventArgs e)
+        {
+            
+            int start = 0;
+
+            for (int bookIndex = 0; bookIndex < Bible.books.Count; bookIndex++)
+            {
+                for (int chapterIndex = 0; chapterIndex < Bible.books[bookIndex].chapters.Count; chapterIndex++)
+                {
+
+                    Page.Clear();
+
+                    for (int verseIndex = 0; verseIndex < Bible.books[bookIndex].chapters[chapterIndex].verses.Count; verseIndex++)
+                    {
+                        if (PageItems.ActualHeight < PageContainer.ActualHeight)
+                        {
+                            Page.Add(Bible.books[bookIndex].chapters[chapterIndex].verses[verseIndex]);
+                        }
+                        else
+                        {
+                            for (int i = start; i < verseIndex; i++)
+                                PageLookup.Add(new PageKey(bookIndex, chapterIndex, i), Page.ToList());
+
+                            start = verseIndex + 1;
+                            Page.Clear();
+                        }
+                    }
+
+                    for (int i = start; i < Bible.books[bookIndex].chapters[chapterIndex].verses.Count; i++)
+                        PageLookup.Add(new PageKey(bookIndex, chapterIndex, i), Page.ToList());
+                        
+                }
+            }
+
+        }
 
         private void HandleVerseChange()
         {
