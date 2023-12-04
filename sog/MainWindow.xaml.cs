@@ -276,29 +276,38 @@ namespace sog
                     Page.Clear();
                     PageItems.UpdateLayout();
 
-                    for (int verseIndex = 0; verseIndex < Bible.books[bookIndex].chapters[chapterIndex].verses.Count; verseIndex++)
+                    int verseIndex = 0;
+
+                    while (verseIndex < Bible.books[bookIndex].chapters[chapterIndex].verses.Count)
                     {
                         if (PageItems.ActualHeight < PageContainer.ActualHeight)
                         {
                             Page.Add(Bible.books[bookIndex].chapters[chapterIndex].verses[verseIndex]);
+                            verseIndex++;
                         }
                         else
                         {
+                            Page.RemoveAt(Page.Count - 1);
+
                             for (int i = start; i < verseIndex; i++)
                                 PageLookup.Add(new PageKey(bookIndex, chapterIndex, i), Page.ToList());
-
-                            start = verseIndex + 1;
+                            
                             Page.Clear();
+
+                            start = verseIndex;
+
                         }
 
                         PageItems.UpdateLayout();
+
                     }
 
                     for (int i = start; i < Bible.books[bookIndex].chapters[chapterIndex].verses.Count; i++)
                         PageLookup.Add(new PageKey(bookIndex, chapterIndex, i), Page.ToList());
-                        
                 }
             }
+
+            MessageBox.Show(PageLookup.Count.ToString());
 
         }
 
