@@ -225,8 +225,9 @@ namespace sog
                                 PageLookup.Add(new PageKey(bookIndex, chapterIndex, i).ToString(), Page.ToList());
                             
                             Page.Clear();
-
+                            
                             start = verseIndex;
+                            verseIndex--;
 
                         }
 
