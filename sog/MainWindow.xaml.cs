@@ -19,21 +19,30 @@ using System.Runtime.CompilerServices;
 using System.Configuration;
 using System.Collections.ObjectModel;
 using System.Windows.Threading;
+using System.Security.Principal;
 
 namespace sog
 {
 
     public class PageKey
     {
-        public int BookIndex { get; }
-        public int ChapterIndex { get; }
-        public int VerseIndex { get; }
+        public int BookIndex { get; set; }
+        public int ChapterIndex { get; set; }
+        public int VerseIndex { get; set; }
+
+        public PageKey? Last { get; set; }
+        public PageKey? Next { get; set; }
 
         public PageKey(int bookIndex, int chapterIndex, int verseIndex)
         {
             BookIndex = bookIndex;
             ChapterIndex = chapterIndex;
             VerseIndex = verseIndex;
+        }
+
+        public override string ToString()
+        {
+            return $"{BookIndex}-{ChapterIndex}-{VerseIndex}";
         }
     }
 
@@ -48,9 +57,10 @@ namespace sog
 
         private Bible Bible;
 
-        Dictionary<PageKey, List<Verse>> PageLookup = new Dictionary<PageKey, List<Verse>>();
+        Dictionary<string, List<Verse>> PageLookup = new Dictionary<string, List<Verse>>();
 
         private string _Header = "";
+        public PageKey? _CurrentPageKey;
         public ObservableCollection<Verse> _Page = new ObservableCollection<Verse>();
 
         private List<string> _Books = new List<string>();
@@ -67,6 +77,19 @@ namespace sog
             {
                 _Header = value;
                 NotifyPropertyChanged("Header");
+            }
+        }
+
+        public PageKey? CurrentPageKey
+        {
+            get
+            {
+                return _CurrentPageKey;
+            }
+            set
+            {
+                _CurrentPageKey = value;
+                NotifyPropertyChanged("CurrentPageKey");
             }
         }
 
@@ -150,115 +173,21 @@ namespace sog
 
         private void HandleBooksComboSelectionChanged(object sender, RoutedEventArgs e)
         {
-            HandleBookChange(BooksCombo.SelectedIndex);
+            LoadPage(CurrentPageKey);
         }
 
         private void HandleChaptersComboSelectionChanged(object sender, RoutedEventArgs e)
         {
-            HandleChapterChange(BooksCombo.SelectedIndex, ChaptersCombo.SelectedIndex);
+            LoadPage(CurrentPageKey);
+        }
+
+        private void HandleVersesComboSelectionChanged(object sender, RoutedEventArgs e)
+        {
+            LoadPage(CurrentPageKey);
         }
 
         private void HandleNextPageButtonClicked(object sender, RoutedEventArgs e)
         {
-            NextPage();
-        }
-
-        private void NextPage()
-        {
-            int bookIndex = BooksCombo.SelectedIndex;
-            int chapterIndex = ChaptersCombo.SelectedIndex;
-
-            Chapter selectedChapter = Bible.books[bookIndex].chapters[chapterIndex];
-
-            if (EndVerseIndex == selectedChapter.verses.Count - 1)
-            {
-                if (bookIndex == Bible.books.Count - 1)
-                    return;
-
-                if (chapterIndex == Bible.books[bookIndex].chapters.Count - 1)
-                    HandleBookChange(bookIndex + 1);
-                else
-                    HandleChapterChange(bookIndex, chapterIndex + 1);
-            }
-            else
-                LoadPage(BooksCombo.SelectedIndex, ChaptersCombo.SelectedIndex, EndVerseIndex + 1);
-
-        }
-
-        private void HandleBookChange(int bookIndex)
-        {
-            if (bookIndex >= 0)
-            {
-                BooksCombo.SelectedIndex = bookIndex;
-
-                Book selectedBook = Bible.books[bookIndex];
-                Chapters = selectedBook.chapters.Select(c => c.chapter).ToList();
-
-                if (Chapters.Any())
-                {
-                    ChaptersCombo.SelectedIndex = 0;
-                    HandleChapterChange(bookIndex, 0);
-                }
-            }
-        }
-
-        private void HandleChapterChange(int bookIndex, int chapterIndex)
-        {
-            if (bookIndex >= 0 && chapterIndex >= 0)
-            {
-                ChaptersCombo.SelectedIndex = chapterIndex;
-
-                Book selectedBook = Bible.books[bookIndex];
-                Chapter selectedChapter = Bible.books[bookIndex].chapters[chapterIndex];
-                Verses = selectedChapter.verses.Select(v => v.verse).ToList();
-                
-                LoadPage(bookIndex, chapterIndex, 0);
-
-                if (Verses.Any())
-                {
-                    VersesCombo.SelectedIndex = 0;
-                }
-            }
-        }
-
-        private List<Verse> LoadPage(int bookIndex, int chapterIndex, int verseIndex)
-        {
-            Book selectedBook = Bible.books[bookIndex];
-            Chapter selectedChapter = Bible.books[bookIndex].chapters[chapterIndex];
-            Verses = selectedChapter.verses.Select(v => v.verse).ToList();
-
-            Header = $"{selectedBook.book} {selectedChapter.chapter}";
-
-            Page.Clear();
-
-            List<Verse> verses = new List<Verse>();
-
-            PageItems.UpdateLayout();
-            PageContainer.UpdateLayout();
-
-            Dispatcher.Invoke(() =>
-            {
-                for (int i = verseIndex; PageItems.ActualHeight < PageContainer.ActualHeight && i < selectedChapter.verses.Count; i++)
-                {
-                    Verse v = selectedChapter.verses[i];
-                    Page.Add(v);
-                    verses.Add(v);
-
-                    PageItems.UpdateLayout();
-                    PageContainer.UpdateLayout();
-                }
-
-                if (Page.Count > 0 && verseIndex + Page.Count < selectedChapter.verses.Count)
-                {
-                    Page.RemoveAt(Page.Count - 1);
-                }
-
-                StartVerseIndex = verseIndex;
-                EndVerseIndex = verseIndex + Page.Count - 1;
-
-            }, DispatcherPriority.Loaded);
-
-            return verses;
         }
 
         private void OnContentRendered(object sender, EventArgs e)
@@ -290,7 +219,7 @@ namespace sog
                             Page.RemoveAt(Page.Count - 1);
 
                             for (int i = start; i < verseIndex; i++)
-                                PageLookup.Add(new PageKey(bookIndex, chapterIndex, i), Page.ToList());
+                                PageLookup.Add(new PageKey(bookIndex, chapterIndex, i).ToString(), Page.ToList());
                             
                             Page.Clear();
 
@@ -303,12 +232,32 @@ namespace sog
                     }
 
                     for (int i = start; i < Bible.books[bookIndex].chapters[chapterIndex].verses.Count; i++)
-                        PageLookup.Add(new PageKey(bookIndex, chapterIndex, i), Page.ToList());
+                        PageLookup.Add(new PageKey(bookIndex, chapterIndex, i).ToString(), Page.ToList());
                 }
             }
 
-            MessageBox.Show(PageLookup.Count.ToString());
+            CurrentPageKey = new PageKey(0, 0, 0);
+            LoadPage(CurrentPageKey);
 
+        }
+
+        private void LoadPage(PageKey? pageKey)
+        {
+            try
+            {
+                Dispatcher.Invoke(() => {
+                    if (pageKey is not null)
+                    {
+                        Page.Clear();
+                        foreach (Verse v in PageLookup[pageKey.ToString()])
+                            Page.Add(v);
+                    }
+                }, DispatcherPriority.Render);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.ToString());
+            }
         }
 
         private void HandleVerseChange()

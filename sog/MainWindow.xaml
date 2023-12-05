@@ -51,16 +51,17 @@
                     <WrapPanel HorizontalAlignment="Center">
                         <StackPanel Margin="5,0,5,0">
                             <TextBlock>Book</TextBlock>
-                            <ComboBox x:Name="BooksCombo" SelectionChanged="HandleBooksComboSelectionChanged" ItemsSource="{Binding Books}" SelectedIndex="0" />
+                            <ComboBox x:Name="BooksCombo" SelectionChanged="HandleBooksComboSelectionChanged" ItemsSource="{Binding Books}" SelectedIndex="{Binding CurrentPageKey.BookIndex, Mode=TwoWay}" />
                         </StackPanel>
                         <StackPanel Margin="5,0,5,0">
                             <TextBlock>Chapter</TextBlock>
-                            <ComboBox x:Name="ChaptersCombo" SelectionChanged="HandleChaptersComboSelectionChanged" ItemsSource="{Binding Chapters}" SelectedIndex="0" />
+                            <ComboBox x:Name="ChaptersCombo" SelectionChanged="HandleChaptersComboSelectionChanged" ItemsSource="{Binding Chapters}"  SelectedIndex="{Binding CurrentPageKey.ChapterIndex, Mode=TwoWay}" />
                         </StackPanel>
                         <StackPanel Margin="5,0,5,0">
                             <TextBlock>Verse</TextBlock>
-                            <ComboBox x:Name="VersesCombo" ItemsSource="{Binding Verses}" SelectedIndex="0" />
+                            <ComboBox x:Name="VersesCombo" SelectionChanged="HandleVersesComboSelectionChanged" ItemsSource="{Binding Verses}"  SelectedIndex="{Binding CurrentPageKey.VerseIndex, Mode=TwoWay}" />
                         </StackPanel>
+                        <Button>Search</Button>
                     </WrapPanel>
                 </Grid>
             </DockPanel>
