@@ -193,7 +193,6 @@ namespace sog
         private void OnContentRendered(object sender, EventArgs e)
         {
             
-            int start = 0;
 
             PageContainer.UpdateLayout();
 
@@ -206,6 +205,7 @@ namespace sog
                     PageItems.UpdateLayout();
 
                     int verseIndex = 0;
+                    int start = 0;
 
                     while (verseIndex < Bible.books[bookIndex].chapters[chapterIndex].verses.Count)
                     {
