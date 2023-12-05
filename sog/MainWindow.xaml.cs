@@ -30,8 +30,6 @@ namespace sog
         public int ChapterIndex { get; set; }
         public int VerseIndex { get; set; }
 
-        public PageKey? Last { get; set; }
-        public PageKey? Next { get; set; }
 
         public PageKey(int bookIndex, int chapterIndex, int verseIndex)
         {
@@ -251,6 +249,9 @@ namespace sog
                         Page.Clear();
                         foreach (Verse v in PageLookup[pageKey.ToString()])
                             Page.Add(v);
+
+                        if (CurrentPageKey is not null)
+                            Header = Bible.books[CurrentPageKey.BookIndex].book + " " + (CurrentPageKey.ChapterIndex + 1).ToString();
                     }
                 }, DispatcherPriority.Render);
             }
