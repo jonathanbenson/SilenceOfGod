@@ -151,9 +151,8 @@ namespace sog
 
             Bible = bibleBuilderService.Build("bible");
 
+            
             Books = Bible.books.Select((book) => book.book).ToList();
-            Chapters = Bible.books[0].chapters.Select((chapter) => chapter.chapter).ToList();
-            Verses = Bible.books[0].chapters[0].verses.Select((verse) => verse.verse).ToList();
 
         }
 
@@ -171,11 +170,17 @@ namespace sog
 
         private void HandleBooksComboSelectionChanged(object sender, RoutedEventArgs e)
         {
+            if (CurrentPageKey is not null)
+                CurrentPageKey = new PageKey(CurrentPageKey.BookIndex, 0, 0);
+
             LoadPage(CurrentPageKey);
         }
 
         private void HandleChaptersComboSelectionChanged(object sender, RoutedEventArgs e)
         {
+            if (CurrentPageKey is not null)
+                CurrentPageKey = new PageKey(CurrentPageKey.BookIndex, CurrentPageKey.ChapterIndex, 0);
+
             LoadPage(CurrentPageKey);
         }
 
@@ -241,24 +246,19 @@ namespace sog
 
         private void LoadPage(PageKey? pageKey)
         {
-            try
-            {
-                Dispatcher.Invoke(() => {
-                    if (pageKey is not null)
-                    {
-                        Page.Clear();
-                        foreach (Verse v in PageLookup[pageKey.ToString()])
-                            Page.Add(v);
+            Dispatcher.Invoke(() => {
+                if (pageKey is not null)
+                {
+                    Page.Clear();
+                    foreach (Verse v in PageLookup[pageKey.ToString()])
+                        Page.Add(v);
 
-                        if (CurrentPageKey is not null)
-                            Header = Bible.books[CurrentPageKey.BookIndex].book + " " + (CurrentPageKey.ChapterIndex + 1).ToString();
-                    }
-                }, DispatcherPriority.Render);
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show(exc.ToString());
-            }
+                    Header = Bible.books[pageKey.BookIndex].book + " " + (pageKey.ChapterIndex + 1).ToString();
+
+                    Chapters = Bible.books[pageKey.BookIndex].chapters.Select((chapter) => chapter.chapter).ToList();
+                    Verses = Bible.books[pageKey.BookIndex].chapters[pageKey.ChapterIndex].verses.Select((verse) => verse.verse).ToList();
+                }
+            }, DispatcherPriority.Render);
         }
 
         private void HandleVerseChange()
