@@ -219,7 +219,11 @@ namespace sog
                         }
                         else
                         {
+
                             Page.RemoveAt(Page.Count - 1);
+
+                            if (start == 0)
+                                verseIndex--;
 
                             for (int i = start; i < verseIndex; i++)
                                 PageLookup.Add(new PageKey(bookIndex, chapterIndex, i).ToString(), Page.ToList());
@@ -227,7 +231,6 @@ namespace sog
                             Page.Clear();
                             
                             start = verseIndex;
-                            verseIndex--;
 
                         }
 
