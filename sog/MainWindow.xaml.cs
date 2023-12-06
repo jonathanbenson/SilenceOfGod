@@ -191,6 +191,30 @@ namespace sog
 
         private void HandleNextPageButtonClicked(object sender, RoutedEventArgs e)
         {
+
+            if (CurrentPageKey is not null)
+            {
+
+                Chapter selectedChapter = Bible.books[CurrentPageKey.BookIndex].chapters[CurrentPageKey.ChapterIndex];
+
+                int lastVerseIndexOfPage = Convert.ToInt32(Page[Page.Count - 1].verse) - 1;
+
+                if (lastVerseIndexOfPage == selectedChapter.verses.Count - 1)
+                {
+                    if (CurrentPageKey.BookIndex == Bible.books.Count - 1)
+                        return;
+
+                    if (CurrentPageKey.ChapterIndex == Bible.books[CurrentPageKey.BookIndex].chapters.Count - 1)
+                        CurrentPageKey = new PageKey(CurrentPageKey.BookIndex, 0, 0);
+                    else
+                        CurrentPageKey = new PageKey(CurrentPageKey.BookIndex, CurrentPageKey.ChapterIndex + 1, 0);
+                }
+                else
+                    CurrentPageKey = new PageKey(CurrentPageKey.BookIndex, CurrentPageKey.ChapterIndex, lastVerseIndexOfPage + 1);
+                
+                LoadPage(CurrentPageKey);
+                
+            }
         }
 
         private void OnContentRendered(object sender, EventArgs e)
@@ -222,8 +246,7 @@ namespace sog
 
                             Page.RemoveAt(Page.Count - 1);
 
-                            if (start == 0)
-                                verseIndex--;
+                            verseIndex--;
 
                             for (int i = start; i < verseIndex; i++)
                                 PageLookup.Add(new PageKey(bookIndex, chapterIndex, i).ToString(), Page.ToList());
