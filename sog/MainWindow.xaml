@@ -61,7 +61,6 @@
                             <TextBlock>Verse</TextBlock>
                             <ComboBox x:Name="VersesCombo" SelectionChanged="HandleVersesComboSelectionChanged" ItemsSource="{Binding Verses}"  SelectedIndex="{Binding CurrentPageKey.VerseIndex, Mode=TwoWay}" />
                         </StackPanel>
-                        <Button>Search</Button>
                     </WrapPanel>
                 </Grid>
             </DockPanel>
