@@ -201,11 +201,14 @@ namespace sog
 
                 if (lastVerseIndexOfPage == selectedChapter.verses.Count - 1)
                 {
-                    if (CurrentPageKey.BookIndex == Bible.books.Count - 1)
-                        return;
 
                     if (CurrentPageKey.ChapterIndex == Bible.books[CurrentPageKey.BookIndex].chapters.Count - 1)
-                        CurrentPageKey = new PageKey(CurrentPageKey.BookIndex, 0, 0);
+                    {
+                        if (CurrentPageKey.BookIndex == Bible.books.Count - 1)
+                            CurrentPageKey = new PageKey(0, 0, 0);
+                        else
+                            CurrentPageKey = new PageKey(CurrentPageKey.BookIndex + 1, 0, 0);
+                    }
                     else
                         CurrentPageKey = new PageKey(CurrentPageKey.BookIndex, CurrentPageKey.ChapterIndex + 1, 0);
                 }
