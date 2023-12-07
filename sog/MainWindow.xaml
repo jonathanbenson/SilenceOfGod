@@ -38,6 +38,7 @@
                 <Button DockPanel.Dock="Left"
                     VerticalAlignment="Bottom"
                     x:Name="LastPageButton"
+                    Click="HandleLastPageButtonClicked"
                     Padding="5">Last Page</Button>
 
                 <Button DockPanel.Dock="Right"

@@ -55,7 +55,9 @@ namespace sog
 
         private Bible Bible;
 
-        Dictionary<string, List<Verse>> PageLookup = new Dictionary<string, List<Verse>>();
+        private Dictionary<string, List<Verse>> PageLookup = new Dictionary<string, List<Verse>>();
+        private Dictionary<string, int> PageKeyIndexLookup = new Dictionary<string, int>();
+        private List<PageKey> PageKeys = new List<PageKey>();
 
         private string _Header = "";
         public PageKey? _CurrentPageKey;
@@ -191,33 +193,18 @@ namespace sog
 
         private void HandleNextPageButtonClicked(object sender, RoutedEventArgs e)
         {
+            if (CurrentPageKey is not null && PageKeyIndexLookup[CurrentPageKey.ToString()] < PageKeys.Count - 1)
+                CurrentPageKey = PageKeys[PageKeyIndexLookup[CurrentPageKey.ToString()] + 1];
 
-            if (CurrentPageKey is not null)
-            {
+            LoadPage(CurrentPageKey);
+        }
 
-                Chapter selectedChapter = Bible.books[CurrentPageKey.BookIndex].chapters[CurrentPageKey.ChapterIndex];
+        private void HandleLastPageButtonClicked(object sender, RoutedEventArgs e)
+        {
+            if (CurrentPageKey is not null && PageKeyIndexLookup[CurrentPageKey.ToString()] > 0)
+                CurrentPageKey = PageKeys[PageKeyIndexLookup[CurrentPageKey.ToString()] - 1];
 
-                int lastVerseIndexOfPage = Convert.ToInt32(Page[Page.Count - 1].verse) - 1;
-
-                if (lastVerseIndexOfPage == selectedChapter.verses.Count - 1)
-                {
-
-                    if (CurrentPageKey.ChapterIndex == Bible.books[CurrentPageKey.BookIndex].chapters.Count - 1)
-                    {
-                        if (CurrentPageKey.BookIndex == Bible.books.Count - 1)
-                            CurrentPageKey = new PageKey(0, 0, 0);
-                        else
-                            CurrentPageKey = new PageKey(CurrentPageKey.BookIndex + 1, 0, 0);
-                    }
-                    else
-                        CurrentPageKey = new PageKey(CurrentPageKey.BookIndex, CurrentPageKey.ChapterIndex + 1, 0);
-                }
-                else
-                    CurrentPageKey = new PageKey(CurrentPageKey.BookIndex, CurrentPageKey.ChapterIndex, lastVerseIndexOfPage + 1);
-                
-                LoadPage(CurrentPageKey);
-                
-            }
+            LoadPage(CurrentPageKey);
         }
 
         private void OnContentRendered(object sender, EventArgs e)
@@ -251,8 +238,7 @@ namespace sog
 
                             verseIndex--;
 
-                            for (int i = start; i < verseIndex; i++)
-                                PageLookup.Add(new PageKey(bookIndex, chapterIndex, i).ToString(), Page.ToList());
+                            AddPageKey(Page.ToList(), bookIndex, chapterIndex, start, verseIndex);
                             
                             Page.Clear();
                             
@@ -264,14 +250,27 @@ namespace sog
 
                     }
 
-                    for (int i = start; i < Bible.books[bookIndex].chapters[chapterIndex].verses.Count; i++)
-                        PageLookup.Add(new PageKey(bookIndex, chapterIndex, i).ToString(), Page.ToList());
+                    AddPageKey(Page.ToList(), bookIndex, chapterIndex, start, Bible.books[bookIndex].chapters[chapterIndex].verses.Count);
                 }
             }
 
             CurrentPageKey = new PageKey(0, 0, 0);
             LoadPage(CurrentPageKey);
 
+        }
+
+        private void AddPageKey(List<Verse> page, int bookIndex, int chapterIndex, int startVerseIndex, int endVerseIndex)
+        {
+            PageKey pk1 = new PageKey(bookIndex, chapterIndex, startVerseIndex);
+            PageKeys.Add(pk1);
+
+            for (int i = startVerseIndex; i < endVerseIndex; i++)
+            {
+                PageKey pk2 = new PageKey(bookIndex, chapterIndex, i);
+
+                PageKeyIndexLookup.Add(pk2.ToString(), PageKeys.Count - 1);
+                PageLookup.Add(pk2.ToString(), page);
+            }
         }
 
         private void LoadPage(PageKey? pageKey)
@@ -289,11 +288,6 @@ namespace sog
                     Verses = Bible.books[pageKey.BookIndex].chapters[pageKey.ChapterIndex].verses.Select((verse) => verse.verse).ToList();
                 }
             }, DispatcherPriority.Render);
-        }
-
-        private void HandleVerseChange()
-        {
-            // TODO
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
