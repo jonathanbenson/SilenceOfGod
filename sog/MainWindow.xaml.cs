@@ -242,7 +242,7 @@ namespace sog
                             
                             Page.Clear();
                             
-                            start = verseIndex;
+                            start = verseIndex + 1;
 
                         }
 
@@ -250,7 +250,7 @@ namespace sog
 
                     }
 
-                    AddPageKey(Page.ToList(), bookIndex, chapterIndex, start, Bible.books[bookIndex].chapters[chapterIndex].verses.Count);
+                    AddPageKey(Page.ToList(), bookIndex, chapterIndex, start, Bible.books[bookIndex].chapters[chapterIndex].verses.Count - 1);
                 }
             }
 
@@ -264,7 +264,7 @@ namespace sog
             PageKey pk1 = new PageKey(bookIndex, chapterIndex, startVerseIndex);
             PageKeys.Add(pk1);
 
-            for (int i = startVerseIndex; i < endVerseIndex; i++)
+            for (int i = startVerseIndex; i <= endVerseIndex; i++)
             {
                 PageKey pk2 = new PageKey(bookIndex, chapterIndex, i);
 
