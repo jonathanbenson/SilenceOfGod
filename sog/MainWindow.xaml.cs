@@ -50,9 +50,6 @@ namespace sog
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
 
-        private int StartVerseIndex = 0;
-        private int EndVerseIndex = 0;
-
         private Bible Bible;
 
         private Dictionary<string, List<Verse>> PageLookup = new Dictionary<string, List<Verse>>();
@@ -153,8 +150,10 @@ namespace sog
 
             Bible = bibleBuilderService.Build("bible");
 
-            
             Books = Bible.books.Select((book) => book.book).ToList();
+            Chapters = Bible.books[0].chapters.Select((chapter) => chapter.chapter).ToList();
+            Verses = Bible.books[0].chapters[0].verses.Select((verse) => verse.verse).ToList();
+
 
         }
 
@@ -172,22 +171,25 @@ namespace sog
 
         private void HandleBooksComboSelectionChanged(object sender, RoutedEventArgs e)
         {
-            if (CurrentPageKey is not null)
-                CurrentPageKey = new PageKey(CurrentPageKey.BookIndex, 0, 0);
+            ChaptersCombo.SelectedIndex = 0;
+            VersesCombo.SelectedIndex = 0;
 
-            LoadPage(CurrentPageKey);
+            Chapters = Bible.books[BooksCombo.SelectedIndex].chapters.Select((chapter) => chapter.chapter).ToList();
+            Verses = Bible.books[BooksCombo.SelectedIndex].chapters[ChaptersCombo.SelectedIndex].verses.Select((verse) => verse.verse).ToList();;
         }
 
         private void HandleChaptersComboSelectionChanged(object sender, RoutedEventArgs e)
         {
-            if (CurrentPageKey is not null)
-                CurrentPageKey = new PageKey(CurrentPageKey.BookIndex, CurrentPageKey.ChapterIndex, 0);
+            VersesCombo.SelectedIndex = 0;
 
-            LoadPage(CurrentPageKey);
+            Verses = Bible.books[BooksCombo.SelectedIndex].chapters[ChaptersCombo.SelectedIndex].verses.Select((verse) => verse.verse).ToList();;
         }
 
-        private void HandleVersesComboSelectionChanged(object sender, RoutedEventArgs e)
+        private void HandleSearchButtonClicked(object sender, RoutedEventArgs e)
         {
+            if (CurrentPageKey is not null)
+                CurrentPageKey = new PageKey(BooksCombo.SelectedIndex, ChaptersCombo.SelectedIndex, VersesCombo.SelectedIndex);
+
             LoadPage(CurrentPageKey);
         }
 
@@ -257,6 +259,9 @@ namespace sog
             CurrentPageKey = new PageKey(0, 0, 0);
             LoadPage(CurrentPageKey);
 
+            BooksCombo.SelectedIndex = 0;
+            ChaptersCombo.SelectedIndex = 0;
+            VersesCombo.SelectedIndex = 0;
         }
 
         private void AddPageKey(List<Verse> page, int bookIndex, int chapterIndex, int startVerseIndex, int endVerseIndex)
@@ -284,8 +289,6 @@ namespace sog
 
                     Header = Bible.books[pageKey.BookIndex].book + " " + (pageKey.ChapterIndex + 1).ToString();
 
-                    Chapters = Bible.books[pageKey.BookIndex].chapters.Select((chapter) => chapter.chapter).ToList();
-                    Verses = Bible.books[pageKey.BookIndex].chapters[pageKey.ChapterIndex].verses.Select((verse) => verse.verse).ToList();
                 }
             }, DispatcherPriority.Render);
         }
@@ -295,6 +298,5 @@ namespace sog
         {  
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }  
-
     }
 }
