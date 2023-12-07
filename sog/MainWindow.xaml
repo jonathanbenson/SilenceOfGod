@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:sog"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="600" MinHeight="800" MinWidth="600" MaxHeight="800" MaxWidth="600"
+        Title="Silence of God" Height="800" Width="600" MinHeight="800" MinWidth="600" MaxHeight="800" MaxWidth="600"
         ContentRendered="OnContentRendered" > 
 
     <Grid>
@@ -15,7 +15,7 @@
             <TextBlock FontSize="20" TextWrapping="Wrap" HorizontalAlignment="Right">- Hebrews 4:12</TextBlock>
         </StackPanel>
 
-        <DockPanel x:Name="MainContent">
+        <DockPanel x:Name="MainContent" Visibility="Hidden">
 
             <Grid DockPanel.Dock="Top">
 
@@ -36,7 +36,7 @@
                 </StackPanel>
             </Grid>
 
-            <StackPanel x:Name="NonVoiceControls" DockPanel.Dock="Bottom">
+            <StackPanel Height="65" x:Name="NonVoiceControls" DockPanel.Dock="Bottom">
 
                 <Separator />
 
@@ -75,11 +75,11 @@
                 </DockPanel>
             </StackPanel>
 
-            <StackPanel x:Name="VoiceControls" Visibility="Collapsed" DockPanel.Dock="Bottom">
+            <StackPanel Height="65" x:Name="VoiceControls" Visibility="Collapsed" DockPanel.Dock="Bottom">
                 <Separator />
-                <DockPanel Margin="10">
-                    <TextBlock DockPanel.Dock="Left" x:Name="NextPageMessage" Text="Say 'help' for instructions" />
-                    <TextBlock DockPanel.Dock="Right" x:Name="NextPageMessage1" Text="Say 'next page' to flip the page, or 'last page' to go back" />
+                <DockPanel Margin="15">
+                    <TextBlock FontSize="16" DockPanel.Dock="Left" x:Name="NextPageMessage" Text="Say 'help' for instructions" />
+                    <TextBlock FontSize="16" DockPanel.Dock="Right" x:Name="NextPageMessage1" Text="Say 'next page' to flip the page, or 'last page' to go back" />
                     <TextBlock Text="" />
                 </DockPanel>
             </StackPanel>

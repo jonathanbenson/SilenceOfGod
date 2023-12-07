@@ -49,9 +49,7 @@ namespace sog
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-
-        Visibility MainContentVisibility = Visibility.Hidden;
-        Visibility InspiringQuoteVisibility = Visibility.Visible;
+        private const long LOADING_TIME = 10000;
 
         private Bible Bible;
 
@@ -212,10 +210,10 @@ namespace sog
             LoadPage(CurrentPageKey);
         }
 
-        private void OnContentRendered(object sender, EventArgs e)
+        private async void OnContentRendered(object sender, EventArgs e)
         {
-
-            InspiringQuote.Visibility = Visibility.Visible;
+            var timer = new Stopwatch();
+            timer.Start();
 
             PageContainer.UpdateLayout();
 
@@ -267,7 +265,14 @@ namespace sog
             ChaptersCombo.SelectedIndex = 0;
             VersesCombo.SelectedIndex = 0;
 
+            timer.Stop();
+
+
+            if (timer.ElapsedMilliseconds < LOADING_TIME)
+                await Task.Delay((int)(LOADING_TIME - timer.ElapsedMilliseconds));
+
             InspiringQuote.Visibility = Visibility.Hidden;
+            MainContent.Visibility = Visibility.Visible;
         }
 
         private void AddPageKey(List<Verse> page, int bookIndex, int chapterIndex, int startVerseIndex, int endVerseIndex)
