@@ -8,86 +8,94 @@
         Title="MainWindow" Height="800" Width="600" MinHeight="800" MinWidth="600" MaxHeight="800" MaxWidth="600"
         ContentRendered="OnContentRendered" > 
 
-    <DockPanel>
+    <Grid>
 
-        <Grid DockPanel.Dock="Top">
+        <StackPanel x:Name="InspiringQuote" VerticalAlignment="Center" HorizontalAlignment="Center" Width="300">
+            <TextBlock FontStyle="Italic" FontSize="20" TextWrapping="Wrap">"For the word of God is quick, and powerful, and sharper than any twoedged sword, piercing even to the dividing asunder of soul and spirit, and of the joints and marrow, and is a discerner of the thoughts and intents of the heart."</TextBlock>
+            <TextBlock FontSize="20" TextWrapping="Wrap" HorizontalAlignment="Right">- Hebrews 4:12</TextBlock>
+        </StackPanel>
 
-            <CheckBox x:Name="VoiceMode"
-                IsChecked="False"
-                HorizontalAlignment="Left"
-                Checked="HandleVoiceModeChecked"
-                Unchecked="HandleVoiceModeUnchecked"
-                Margin="5">Voice Mode</CheckBox>
+        <DockPanel x:Name="MainContent">
 
-            <StackPanel HorizontalAlignment="Center">
-                <TextBlock Text="{Binding Header}"
-                        FontSize="20"
-                        FontWeight="Bold"
-                        HorizontalAlignment="Center"
-                        Margin="10,10,10,5"/>
-                <Separator/>
+            <Grid DockPanel.Dock="Top">
+
+                <CheckBox x:Name="VoiceMode"
+                    IsChecked="False"
+                    HorizontalAlignment="Left"
+                    Checked="HandleVoiceModeChecked"
+                    Unchecked="HandleVoiceModeUnchecked"
+                    Margin="5">Voice Mode</CheckBox>
+
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock Text="{Binding Header}"
+                            FontSize="20"
+                            FontWeight="Bold"
+                            HorizontalAlignment="Center"
+                            Margin="10,10,10,5"/>
+                    <Separator/>
+                </StackPanel>
+            </Grid>
+
+            <StackPanel x:Name="NonVoiceControls" DockPanel.Dock="Bottom">
+
+                <Separator />
+
+                <DockPanel Margin="10">
+
+                    <Button DockPanel.Dock="Left"
+                        VerticalAlignment="Bottom"
+                        x:Name="LastPageButton"
+                        Click="HandleLastPageButtonClicked"
+                        Padding="5">Last Page</Button>
+
+                    <Button DockPanel.Dock="Right"
+                        VerticalAlignment="Bottom"
+                        x:Name="NextPageButton"
+                        Click="HandleNextPageButtonClicked"
+                        Padding="5">Next Page</Button>
+
+                    <Grid VerticalAlignment="Center">
+
+                        <WrapPanel HorizontalAlignment="Center">
+                            <StackPanel Margin="5,0,5,0">
+                                <TextBlock>Book</TextBlock>
+                                <ComboBox x:Name="BooksCombo" SelectionChanged="HandleBooksComboSelectionChanged" ItemsSource="{Binding Books}" />
+                            </StackPanel>
+                            <StackPanel Margin="5,0,5,0">
+                                <TextBlock>Chapter</TextBlock>
+                                <ComboBox x:Name="ChaptersCombo" SelectionChanged="HandleChaptersComboSelectionChanged" ItemsSource="{Binding Chapters}" />
+                            </StackPanel>
+                            <StackPanel Margin="5,0,5,0">
+                                <TextBlock>Verse</TextBlock>
+                                <ComboBox x:Name="VersesCombo" ItemsSource="{Binding Verses}" />
+                            </StackPanel>
+                            <Button Margin="5,0,5,0" Click="HandleSearchButtonClicked" VerticalAlignment="Bottom" Padding="5">Search</Button>
+                        </WrapPanel>
+                    </Grid>
+                </DockPanel>
             </StackPanel>
-        </Grid>
 
-        <StackPanel x:Name="NonVoiceControls" DockPanel.Dock="Bottom">
-
-            <Separator />
-
-            <DockPanel Margin="10">
-
-                <Button DockPanel.Dock="Left"
-                    VerticalAlignment="Bottom"
-                    x:Name="LastPageButton"
-                    Click="HandleLastPageButtonClicked"
-                    Padding="5">Last Page</Button>
-
-                <Button DockPanel.Dock="Right"
-                    VerticalAlignment="Bottom"
-                    x:Name="NextPageButton"
-                    Click="HandleNextPageButtonClicked"
-                    Padding="5">Next Page</Button>
-
-                <Grid VerticalAlignment="Center">
-
-                    <WrapPanel HorizontalAlignment="Center">
-                        <StackPanel Margin="5,0,5,0">
-                            <TextBlock>Book</TextBlock>
-                            <ComboBox x:Name="BooksCombo" SelectionChanged="HandleBooksComboSelectionChanged" ItemsSource="{Binding Books}" />
-                        </StackPanel>
-                        <StackPanel Margin="5,0,5,0">
-                            <TextBlock>Chapter</TextBlock>
-                            <ComboBox x:Name="ChaptersCombo" SelectionChanged="HandleChaptersComboSelectionChanged" ItemsSource="{Binding Chapters}" />
-                        </StackPanel>
-                        <StackPanel Margin="5,0,5,0">
-                            <TextBlock>Verse</TextBlock>
-                            <ComboBox x:Name="VersesCombo" ItemsSource="{Binding Verses}" />
-                        </StackPanel>
-                        <Button Margin="5,0,5,0" Click="HandleSearchButtonClicked" VerticalAlignment="Bottom" Padding="5">Search</Button>
-                    </WrapPanel>
-                </Grid>
-            </DockPanel>
-        </StackPanel>
-
-        <StackPanel x:Name="VoiceControls" Visibility="Collapsed" DockPanel.Dock="Bottom">
-            <Separator />
-            <DockPanel Margin="10">
-                <TextBlock DockPanel.Dock="Left" x:Name="NextPageMessage" Text="Say 'help' for instructions" />
-                <TextBlock DockPanel.Dock="Right" x:Name="NextPageMessage1" Text="Say 'next page' to flip the page, or 'last page' to go back" />
-                <TextBlock Text="" />
-            </DockPanel>
-        </StackPanel>
-
-        <StackPanel x:Name="PageContainer" Margin="15,10,15,10">
-            <StackPanel x:Name="PageItems">
-                <ItemsControl ItemsSource="{Binding Page}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock FontSize="16" TextWrapping="Wrap" Text="{Binding NumAndText}" Margin="0,0,0,5"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+            <StackPanel x:Name="VoiceControls" Visibility="Collapsed" DockPanel.Dock="Bottom">
+                <Separator />
+                <DockPanel Margin="10">
+                    <TextBlock DockPanel.Dock="Left" x:Name="NextPageMessage" Text="Say 'help' for instructions" />
+                    <TextBlock DockPanel.Dock="Right" x:Name="NextPageMessage1" Text="Say 'next page' to flip the page, or 'last page' to go back" />
+                    <TextBlock Text="" />
+                </DockPanel>
             </StackPanel>
-        </StackPanel>
 
-    </DockPanel>
+            <StackPanel x:Name="PageContainer" Margin="15,10,15,10">
+                <StackPanel x:Name="PageItems">
+                    <ItemsControl ItemsSource="{Binding Page}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock FontSize="16" TextWrapping="Wrap" Text="{Binding NumAndText}" Margin="0,0,0,5"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </StackPanel>
+
+        </DockPanel>
+    </Grid>
 </Window>

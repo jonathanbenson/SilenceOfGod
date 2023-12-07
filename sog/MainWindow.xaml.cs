@@ -50,6 +50,9 @@ namespace sog
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
 
+        Visibility MainContentVisibility = Visibility.Hidden;
+        Visibility InspiringQuoteVisibility = Visibility.Visible;
+
         private Bible Bible;
 
         private Dictionary<string, List<Verse>> PageLookup = new Dictionary<string, List<Verse>>();
@@ -211,7 +214,8 @@ namespace sog
 
         private void OnContentRendered(object sender, EventArgs e)
         {
-            
+
+            InspiringQuote.Visibility = Visibility.Visible;
 
             PageContainer.UpdateLayout();
 
@@ -262,6 +266,8 @@ namespace sog
             BooksCombo.SelectedIndex = 0;
             ChaptersCombo.SelectedIndex = 0;
             VersesCombo.SelectedIndex = 0;
+
+            InspiringQuote.Visibility = Visibility.Hidden;
         }
 
         private void AddPageKey(List<Verse> page, int bookIndex, int chapterIndex, int startVerseIndex, int endVerseIndex)
