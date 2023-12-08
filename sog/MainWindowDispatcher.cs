@@ -12,6 +12,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     {
         CommandDispatcher.RouteCommand("exit", HandleExit);
         CommandDispatcher.RouteCommand("help", HandleHelp);
+        CommandDispatcher.RouteCommand("contents", HandleContents);
         CommandDispatcher.RouteCommand("search", HandleSearch);
         CommandDispatcher.RouteCommand("next", HandleNextPage);
         CommandDispatcher.RouteCommand("last", HandleLastPage);
@@ -25,6 +26,13 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     private void HandleHelp(string[] args)
     {
         MessageBox.Show("help is on the way");
+    }
+
+    private void HandleContents(string[] args)
+    {
+        ContentsWindow window = new ContentsWindow(Bible);
+        window.Show();
+
     }
 
     private void HandleSearch(string[] args)
