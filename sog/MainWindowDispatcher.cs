@@ -10,10 +10,16 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
     private void RouteCommands()
     {
+        CommandDispatcher.RouteCommand("exit", HandleExit);
         CommandDispatcher.RouteCommand("help", HandleHelp);
         CommandDispatcher.RouteCommand("search", HandleSearch);
         CommandDispatcher.RouteCommand("next", HandleNextPage);
         CommandDispatcher.RouteCommand("last", HandleLastPage);
+    }
+
+    private void HandleExit(string[] args)
+    {
+        Close();
     }
 
     private void HandleHelp(string[] args)
