@@ -20,6 +20,8 @@ using System.Configuration;
 using System.Collections.ObjectModel;
 using System.Windows.Threading;
 using System.Security.Principal;
+using sog.src;
+using System.Printing.IndexedProperties;
 
 namespace sog
 {
@@ -64,6 +66,8 @@ namespace sog
         private List<string> _Books = new List<string>();
         private List<string> _Chapters = new List<string>();
         private List<string> _Verses = new List<string>();
+
+        private CommandDispatcher CommandDispatcher = new CommandDispatcher();
 
         public string Header
         {
@@ -155,7 +159,27 @@ namespace sog
             Chapters = Bible.books[0].chapters.Select((chapter) => chapter.chapter).ToList();
             Verses = Bible.books[0].chapters[0].verses.Select((verse) => verse.verse).ToList();
 
+            RouteCommands();
 
+        }
+
+        private void RouteCommands()
+        {
+            CommandDispatcher.RouteCommand("next", HandleNextPage);
+            CommandDispatcher.RouteCommand("last", HandleLastPage);
+            CommandDispatcher.RouteCommand("search", HandleSearch);
+        }
+
+        private void HandleVoiceExecute(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CommandDispatcher.Dispatch(VoiceText.Text);
+            }
+            catch (ArgumentException exc)
+            {
+                MessageBox.Show(exc.ToString());
+            }
         }
 
         private void HandleVoiceModeChecked(object sender, RoutedEventArgs e)
@@ -188,13 +212,23 @@ namespace sog
 
         private void HandleSearchButtonClicked(object sender, RoutedEventArgs e)
         {
+            HandleSearch(new string[] { BooksCombo.SelectedIndex.ToString(), ChaptersCombo.SelectedIndex.ToString(), VersesCombo.SelectedIndex.ToString() });
+        }
+
+        private void HandleSearch(string[] args)
+        {
             if (CurrentPageKey is not null)
-                CurrentPageKey = new PageKey(BooksCombo.SelectedIndex, ChaptersCombo.SelectedIndex, VersesCombo.SelectedIndex);
+                CurrentPageKey = new PageKey(Convert.ToInt32(args[0]), Convert.ToInt32(args[1]), Convert.ToInt32(args[2]));
 
             LoadPage(CurrentPageKey);
         }
 
         private void HandleNextPageButtonClicked(object sender, RoutedEventArgs e)
+        {
+            HandleNextPage(new string[] {});
+        }
+
+        private void HandleNextPage(string[] args)
         {
             if (CurrentPageKey is not null && PageKeyIndexLookup[CurrentPageKey.ToString()] < PageKeys.Count - 1)
                 CurrentPageKey = PageKeys[PageKeyIndexLookup[CurrentPageKey.ToString()] + 1];
@@ -203,6 +237,11 @@ namespace sog
         }
 
         private void HandleLastPageButtonClicked(object sender, RoutedEventArgs e)
+        {
+            HandleLastPage(new string[] {});
+        }
+
+        private void HandleLastPage(string[] args)
         {
             if (CurrentPageKey is not null && PageKeyIndexLookup[CurrentPageKey.ToString()] > 0)
                 CurrentPageKey = PageKeys[PageKeyIndexLookup[CurrentPageKey.ToString()] - 1];

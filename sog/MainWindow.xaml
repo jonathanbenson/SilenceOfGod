@@ -77,11 +77,8 @@
 
             <StackPanel Height="65" x:Name="VoiceControls" Visibility="Collapsed" DockPanel.Dock="Bottom">
                 <Separator />
-                <DockPanel Margin="15">
-                    <TextBlock FontSize="16" DockPanel.Dock="Left" x:Name="NextPageMessage" Text="Say 'help' for instructions" />
-                    <TextBlock FontSize="16" DockPanel.Dock="Right" x:Name="NextPageMessage1" Text="Say 'next page' to flip the page, or 'last page' to go back" />
-                    <TextBlock Text="" />
-                </DockPanel>
+                <TextBox x:Name="VoiceText"></TextBox>
+                <Button Click="HandleVoiceExecute">Execute</Button>
             </StackPanel>
 
             <StackPanel x:Name="PageContainer" Margin="15,10,15,10">
