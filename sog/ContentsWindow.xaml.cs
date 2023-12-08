@@ -22,9 +22,20 @@ namespace sog
 
             ContentsItemsControl.ItemsSource = Books;
 
+            List<string> contentsEntries = new List<string>();
+
+            int colCount = bible.books.Count / 3;
+
+            for (int i = 0; i < colCount; i++)
+            {
+                contentsEntries.Add((i + 1).ToString() + ". " + (bible.books[i]).ContentsEntry);
+                contentsEntries.Add((i + colCount + 1).ToString() + ". " + (bible.books[i + colCount]).ContentsEntry);
+                contentsEntries.Add((i + (colCount * 2) + 1).ToString() + ". " + (bible.books[i + (colCount * 2)]).ContentsEntry);
+            }
+
             Books.Clear();
-            foreach (var (book, i) in bible.books.Select((value, i) => (value, i)))
-                Books.Add((i+1).ToString() + ". " + book.ContentsEntry);
+            foreach (string contentsEntry in contentsEntries)
+                Books.Add(contentsEntry);
 
         }
     }
