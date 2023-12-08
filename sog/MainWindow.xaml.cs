@@ -310,7 +310,7 @@ namespace sog
             if (timer.ElapsedMilliseconds < LOADING_TIME)
                 await Task.Delay((int)(LOADING_TIME - timer.ElapsedMilliseconds));
 
-            InspiringQuote.Visibility = Visibility.Hidden;
+            LoadingContent.Visibility = Visibility.Hidden;
             MainContent.Visibility = Visibility.Visible;
         }
 
