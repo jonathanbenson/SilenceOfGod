@@ -37,11 +37,16 @@
                             Margin="10,10,10,5"/>
                     <Separator/>
                 </StackPanel>
+                
+                <WrapPanel HorizontalAlignment="Right">
+                    <Button Click="HandleContentsButtonClicked" Padding="5" Margin="5">Table of Contents</Button>
+                    <Button Click="HandleHelpButtonClicked" Padding="5" Margin="5">Help</Button>
+                </WrapPanel>
             </Grid>
 
             <StackPanel Height="65" x:Name="NonVoiceControls" DockPanel.Dock="Bottom">
 
-                <Separator />
+                <Separator Width="150" />
 
                 <DockPanel Margin="10">
 

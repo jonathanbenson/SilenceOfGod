@@ -58,6 +58,17 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         Verses = Bible.books[BooksCombo.SelectedIndex].chapters[ChaptersCombo.SelectedIndex].verses.Select((verse) => verse.verse).ToList();;
     }
 
+
+    private void HandleHelpButtonClicked(object sender, RoutedEventArgs e)
+    {
+        HandleHelp(new string[] {});
+    }
+
+    private void HandleContentsButtonClicked(object sender, RoutedEventArgs e)
+    {
+        HandleContents(new string[] {});
+    }
+
     private void HandleSearchButtonClicked(object sender, RoutedEventArgs e)
     {
         HandleSearch(new string[] { BooksCombo.SelectedIndex.ToString(), ChaptersCombo.SelectedIndex.ToString(), VersesCombo.SelectedIndex.ToString() });
@@ -67,8 +78,6 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     {
         HandleNextPage(new string[] { "1" });
     }
-
-
 
     private void HandleLastPageButtonClicked(object sender, RoutedEventArgs e)
     {
