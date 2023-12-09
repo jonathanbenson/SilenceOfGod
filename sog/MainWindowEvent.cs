@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
 using System.Windows.Threading;
+using System.Speech.Recognition;
 using sog.src;
 
 namespace sog;
@@ -84,7 +85,26 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         HandleLastPage(new string[] { "1" });
     }
 
-
+    private void HandleSpeechRecognitionTestButtonClicked(object sender, RoutedEventArgs e)
+    {
+        SpeechRecognitionEngine recognizer = new SpeechRecognitionEngine();
+        Grammar dictationGrammar = new DictationGrammar();
+        recognizer.LoadGrammar(dictationGrammar);
+        try
+        {
+            recognizer.SetInputToDefaultAudioDevice();
+            RecognitionResult result = recognizer.Recognize();
+            MessageBox.Show(result.Text);
+        }
+        catch (InvalidOperationException exception)
+        {
+            MessageBox.Show(exception.ToString());
+        }
+        finally
+        {
+            recognizer.UnloadAllGrammars();
+        }
+    }
 
     private async void OnContentRendered(object sender, EventArgs e)
     {
