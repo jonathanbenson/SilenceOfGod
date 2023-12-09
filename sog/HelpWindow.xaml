@@ -1,0 +1,44 @@
+
+<Window x:Class="sog.HelpWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:sog"
+        mc:Ignorable="d"
+        Title="Help" Height="800" Width="600" MinHeight="800" MinWidth="600" MaxHeight="800" MaxWidth="600">
+
+<DockPanel>
+    <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0,10,0,10" FontSize="24">Help</TextBlock>
+    <StackPanel>
+        <StackPanel Margin="15,10,0,10">
+            <TextBlock FontSize="16">Command: exit</TextBlock>
+            <TextBlock FontSize="16">Purpose: Close the current window</TextBlock>
+        </StackPanel>
+        <StackPanel Margin="15,10,0,10">
+            <TextBlock FontSize="16">Command: help</TextBlock>
+            <TextBlock FontSize="16">Purpose: Open up a helpful window for instructions</TextBlock>
+        </StackPanel>
+        <StackPanel Margin="15,10,0,10">
+            <TextBlock FontSize="16">Command: contents</TextBlock>
+            <TextBlock FontSize="16">Purpose: Open the table of contents</TextBlock>
+        </StackPanel>
+        <StackPanel Margin="15,10,0,10">
+            <TextBlock FontSize="16">Command: search {book name} {chapter} {verse}</TextBlock>
+            <TextBlock FontSize="16">Purpose: Navigate to a specific verse</TextBlock>
+            <TextBlock FontSize="16">Example 1: "search John three sixteen" to navigate to John 3:16</TextBlock>
+            <TextBlock FontSize="16">Example 2: "search First Corinthians fifteen one" to navigate to 1 Corinthians 15:1</TextBlock>
+        </StackPanel>
+        <StackPanel Margin="15,10,0,10">
+            <TextBlock FontSize="16">Command: next</TextBlock>
+            <TextBlock FontSize="16">Purpose: Go forward one page</TextBlock>
+        </StackPanel>
+        <StackPanel Margin="15,10,0,10">
+            <TextBlock FontSize="16">Command: last</TextBlock>
+            <TextBlock FontSize="16">Purpose: Go backwards one page</TextBlock>
+        </StackPanel>
+    </StackPanel>
+</DockPanel>
+
+
+</Window>

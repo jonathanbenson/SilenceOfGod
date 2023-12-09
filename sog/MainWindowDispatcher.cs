@@ -25,14 +25,14 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
     private void HandleHelp(string[] args)
     {
-        MessageBox.Show("help is on the way");
+        HelpWindow window = new HelpWindow();
+        window.ShowDialog();
     }
 
     private void HandleContents(string[] args)
     {
         ContentsWindow window = new ContentsWindow(Bible);
         window.ShowDialog();
-
     }
 
     private void HandleSearch(string[] args)
