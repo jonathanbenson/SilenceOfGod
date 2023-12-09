@@ -24,18 +24,18 @@
             <TextBlock TextWrapping="Wrap" FontSize="16">Open the table of contents</TextBlock>
         </StackPanel>
         <StackPanel Margin="15,10,0,10">
-            <TextBlock TextWrapping="Wrap" FontWeight="Bold" FontSize="16">search {book name} {chapter} {verse}</TextBlock>
+            <TextBlock TextWrapping="Wrap" FontWeight="Bold" FontSize="16">search {book} {chapter} {verse}</TextBlock>
             <TextBlock TextWrapping="Wrap" FontSize="16">Navigate to a specific verse</TextBlock>
-            <TextBlock TextWrapping="Wrap" FontSize="16">Example 1: "search John three sixteen" to navigate to John 3:16</TextBlock>
-            <TextBlock TextWrapping="Wrap" FontSize="16">Example 2: "search First Corinthians fifteen one" to navigate to 1 Corinthians 15:1</TextBlock>
+            <TextBlock FontStyle="Italic" TextWrapping="Wrap" FontSize="16">Example 1: "search John three sixteen" to navigate to John 3:16</TextBlock>
+            <TextBlock FontStyle="Italic" TextWrapping="Wrap" FontSize="16">Example 2: "search First Corinthians fifteen one" to navigate to 1 Corinthians 15:1</TextBlock>
         </StackPanel>
         <StackPanel Margin="15,10,0,10">
-            <TextBlock TextWrapping="Wrap" FontWeight="Bold" FontSize="16">next</TextBlock>
-            <TextBlock TextWrapping="Wrap" FontSize="16">Go forward one page</TextBlock>
+            <TextBlock TextWrapping="Wrap" FontWeight="Bold" FontSize="16">next {n}</TextBlock>
+            <TextBlock TextWrapping="Wrap" FontSize="16">Go forward n pages</TextBlock>
         </StackPanel>
         <StackPanel Margin="15,10,0,10">
-            <TextBlock TextWrapping="Wrap" FontWeight="Bold" FontSize="16">last</TextBlock>
-            <TextBlock TextWrapping="Wrap" FontSize="16">Go backwards one page</TextBlock>
+            <TextBlock TextWrapping="Wrap" FontWeight="Bold" FontSize="16">last {n}</TextBlock>
+            <TextBlock TextWrapping="Wrap" FontSize="16">Go backwards n pages</TextBlock>
         </StackPanel>
     </StackPanel>
 </DockPanel>
