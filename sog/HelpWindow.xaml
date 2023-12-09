@@ -12,30 +12,30 @@
     <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0,10,0,10" FontSize="24">Help</TextBlock>
     <StackPanel>
         <StackPanel Margin="15,10,0,10">
-            <TextBlock FontSize="16">Command: exit</TextBlock>
-            <TextBlock FontSize="16">Purpose: Close the current window</TextBlock>
+            <TextBlock TextWrapping="Wrap" FontWeight="Bold" FontSize="16">exit</TextBlock>
+            <TextBlock TextWrapping="Wrap" FontSize="16">Close the current window</TextBlock>
         </StackPanel>
         <StackPanel Margin="15,10,0,10">
-            <TextBlock FontSize="16">Command: help</TextBlock>
-            <TextBlock FontSize="16">Purpose: Open up a helpful window for instructions</TextBlock>
+            <TextBlock TextWrapping="Wrap" FontWeight="Bold" FontSize="16">help</TextBlock>
+            <TextBlock TextWrapping="Wrap" FontSize="16">Open up a helpful window for instructions</TextBlock>
         </StackPanel>
         <StackPanel Margin="15,10,0,10">
-            <TextBlock FontSize="16">Command: contents</TextBlock>
-            <TextBlock FontSize="16">Purpose: Open the table of contents</TextBlock>
+            <TextBlock TextWrapping="Wrap" FontWeight="Bold" FontSize="16">contents</TextBlock>
+            <TextBlock TextWrapping="Wrap" FontSize="16">Open the table of contents</TextBlock>
         </StackPanel>
         <StackPanel Margin="15,10,0,10">
-            <TextBlock FontSize="16">Command: search {book name} {chapter} {verse}</TextBlock>
-            <TextBlock FontSize="16">Purpose: Navigate to a specific verse</TextBlock>
-            <TextBlock FontSize="16">Example 1: "search John three sixteen" to navigate to John 3:16</TextBlock>
-            <TextBlock FontSize="16">Example 2: "search First Corinthians fifteen one" to navigate to 1 Corinthians 15:1</TextBlock>
+            <TextBlock TextWrapping="Wrap" FontWeight="Bold" FontSize="16">search {book name} {chapter} {verse}</TextBlock>
+            <TextBlock TextWrapping="Wrap" FontSize="16">Navigate to a specific verse</TextBlock>
+            <TextBlock TextWrapping="Wrap" FontSize="16">Example 1: "search John three sixteen" to navigate to John 3:16</TextBlock>
+            <TextBlock TextWrapping="Wrap" FontSize="16">Example 2: "search First Corinthians fifteen one" to navigate to 1 Corinthians 15:1</TextBlock>
         </StackPanel>
         <StackPanel Margin="15,10,0,10">
-            <TextBlock FontSize="16">Command: next</TextBlock>
-            <TextBlock FontSize="16">Purpose: Go forward one page</TextBlock>
+            <TextBlock TextWrapping="Wrap" FontWeight="Bold" FontSize="16">next</TextBlock>
+            <TextBlock TextWrapping="Wrap" FontSize="16">Go forward one page</TextBlock>
         </StackPanel>
         <StackPanel Margin="15,10,0,10">
-            <TextBlock FontSize="16">Command: last</TextBlock>
-            <TextBlock FontSize="16">Purpose: Go backwards one page</TextBlock>
+            <TextBlock TextWrapping="Wrap" FontWeight="Bold" FontSize="16">last</TextBlock>
+            <TextBlock TextWrapping="Wrap" FontSize="16">Go backwards one page</TextBlock>
         </StackPanel>
     </StackPanel>
 </DockPanel>
