@@ -11,6 +11,8 @@ using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
 using System.Windows.Threading;
 using sog.src;
+using System.Net.Sockets;
+using System.Threading;
 
 namespace sog
 {
@@ -38,6 +40,11 @@ namespace sog
         private List<string> _Verses = new List<string>();
 
         private CommandDispatcher CommandDispatcher = new CommandDispatcher();
+        private Thread ListenerThread;
+        private bool DoExitListenerThread = false;
+        private bool DoListen = false;
+        
+        private string _VoiceMessage = "";
 
         public string Header
         {
@@ -114,6 +121,19 @@ namespace sog
             }
         }
 
+        public string VoiceMessage
+        {
+            get
+            {
+                return _VoiceMessage;
+            }
+            set
+            {
+                _VoiceMessage = value;
+                NotifyPropertyChanged("VoiceMessage");
+            }
+        }
+
 
         public MainWindow()
         {
@@ -131,6 +151,17 @@ namespace sog
 
             RouteCommands();
 
+            ListenerThread = new Thread(Listen)
+            {
+                IsBackground = true
+            };
+            ListenerThread.Start();
+
+        }
+
+        ~MainWindow()
+        {
+            DoExitListenerThread = true;
         }
 
 

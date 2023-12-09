@@ -10,6 +10,8 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
 using System.Windows.Threading;
+using System.Speech.Recognition;
+using System.Threading;
 using sog.src;
 
 namespace sog;
@@ -33,6 +35,7 @@ public class PageKey
         return $"{BookIndex}-{ChapterIndex}-{VerseIndex}";
     }
 }
+
 public partial class MainWindow : Window, INotifyPropertyChanged
 {
 
@@ -63,5 +66,66 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
             }
         }, DispatcherPriority.Render);
+    }
+
+    private void Listen()
+    {
+        bool isAcceptingCommands = false;
+
+        while (true)
+        {
+            if (DoExitListenerThread)
+                break;
+            else if (!DoListen)
+            {
+                Thread.Sleep(1000);
+                continue;
+            }
+
+            if (isAcceptingCommands)
+                VoiceMessage = "Say 'help' for a list of available commands, or 'stop' for the program to stop listening to commands";
+            else
+                VoiceMessage = "Say 'start' for the program to start listening to commands";
+
+            string text = "Invalid command";
+
+            SpeechRecognitionEngine recognizer = new SpeechRecognitionEngine();
+            Grammar dictationGrammar = new DictationGrammar();
+            recognizer.LoadGrammar(dictationGrammar);
+
+            try
+            {
+                recognizer.SetInputToDefaultAudioDevice();
+                RecognitionResult result = recognizer.Recognize();
+
+                text = result.Text.ToLower();
+
+                if (isAcceptingCommands)
+                {
+                    if (text == "stop")
+                        isAcceptingCommands = false;
+                    else
+                        CommandDispatcher.Dispatch(text);
+                }
+                else if (text == "start")
+                    isAcceptingCommands = true;
+
+            }
+            catch (InvalidOperationException e)
+            {
+                VoiceMessage = "Could not recognize input from default aduio device. Try changing your microphone and restart the application.";
+                Thread.Sleep(1000);
+            }
+            catch (Exception e)
+            {
+                VoiceMessage = $"Invalid command: '{text}'";
+                Thread.Sleep(1000);
+            }
+            finally
+            {
+                recognizer.UnloadAllGrammars();
+                recognizer.Dispose();
+            }
+        }
     }
 }

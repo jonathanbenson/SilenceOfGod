@@ -84,10 +84,7 @@
             </StackPanel>
 
             <StackPanel Height="65" x:Name="VoiceControls" Visibility="Collapsed" DockPanel.Dock="Bottom">
-                <Separator />
-                <TextBox x:Name="VoiceText"></TextBox>
-                <Button Click="HandleVoiceExecute">Execute</Button>
-                <Button x:Name="SpeechRecognitionTestButton" Click="HandleSpeechRecognitionTestButtonClicked">Speech Recognition Test</Button>
+                <TextBlock Text="{Binding VoiceMessage}" />
             </StackPanel>
 
             <StackPanel x:Name="PageContainer" Margin="15,10,15,10">

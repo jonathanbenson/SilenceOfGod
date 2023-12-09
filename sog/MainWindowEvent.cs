@@ -19,28 +19,20 @@ namespace sog;
 public partial class MainWindow : Window, INotifyPropertyChanged
 {
 
-    private void HandleVoiceExecute(object sender, RoutedEventArgs e)
-    {
-        try
-        {
-            CommandDispatcher.Dispatch(VoiceText.Text);
-        }
-        catch (ArgumentException exc)
-        {
-            MessageBox.Show(exc.ToString());
-        }
-    }
-
     private void HandleVoiceModeChecked(object sender, RoutedEventArgs e)
     {
         VoiceControls.Visibility = Visibility.Visible;
         NonVoiceControls.Visibility = Visibility.Collapsed;
+
+        DoListen = true;
     }
 
     private void HandleVoiceModeUnchecked(object sender, RoutedEventArgs e)
     {
         VoiceControls.Visibility = Visibility.Collapsed;
         NonVoiceControls.Visibility = Visibility.Visible;
+
+        DoListen = false;
     }
 
     private void HandleBooksComboSelectionChanged(object sender, RoutedEventArgs e)
