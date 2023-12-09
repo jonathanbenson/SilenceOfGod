@@ -45,16 +45,20 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
     private void HandleNextPage(string[] args)
     {
-        if (CurrentPageKey is not null && PageKeyIndexLookup[CurrentPageKey.ToString()] < PageKeys.Count - 1)
-            CurrentPageKey = PageKeys[PageKeyIndexLookup[CurrentPageKey.ToString()] + 1];
+        int n = Convert.ToInt32(args[0]);
+
+        if (CurrentPageKey is not null && PageKeyIndexLookup[CurrentPageKey.ToString()] < PageKeys.Count - n)
+            CurrentPageKey = PageKeys[PageKeyIndexLookup[CurrentPageKey.ToString()] + n];
 
         LoadPage(CurrentPageKey);
     }
 
     private void HandleLastPage(string[] args)
     {
-        if (CurrentPageKey is not null && PageKeyIndexLookup[CurrentPageKey.ToString()] > 0)
-            CurrentPageKey = PageKeys[PageKeyIndexLookup[CurrentPageKey.ToString()] - 1];
+        int n = Convert.ToInt32(args[0]);
+
+        if (CurrentPageKey is not null && PageKeyIndexLookup[CurrentPageKey.ToString()] >= n)
+            CurrentPageKey = PageKeys[PageKeyIndexLookup[CurrentPageKey.ToString()] - n];
 
         LoadPage(CurrentPageKey);
     }

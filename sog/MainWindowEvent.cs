@@ -65,14 +65,14 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
     private void HandleNextPageButtonClicked(object sender, RoutedEventArgs e)
     {
-        HandleNextPage(new string[] {});
+        HandleNextPage(new string[] { "1" });
     }
 
 
 
     private void HandleLastPageButtonClicked(object sender, RoutedEventArgs e)
     {
-        HandleLastPage(new string[] {});
+        HandleLastPage(new string[] { "1" });
     }
 
 
