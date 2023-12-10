@@ -14,6 +14,7 @@
         <DockPanel x:Name="LoadingContent">
             <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" FontSize="12" Margin="0,10,0,0">Loading...</TextBlock>
             <StackPanel x:Name="InspiringQuote" VerticalAlignment="Center" HorizontalAlignment="Center" Width="300">
+                <Image Width="200" Margin="0,0,0,50" Source="res/sog.png"/>
                 <TextBlock FontStyle="Italic" FontSize="20" TextWrapping="Wrap">"For the word of God is quick, and powerful, and sharper than any twoedged sword, piercing even to the dividing asunder of soul and spirit, and of the joints and marrow, and is a discerner of the thoughts and intents of the heart."</TextBlock>
                 <TextBlock Margin="0,10,0,0" FontSize="16" TextWrapping="Wrap" HorizontalAlignment="Center">- Hebrews 4:12 -</TextBlock>
             </StackPanel>
