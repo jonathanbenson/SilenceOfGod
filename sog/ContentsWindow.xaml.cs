@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Speech.Recognition;
 using System.Windows;
-using sog.src.model;
+using sog.src;
 
 namespace sog
 {
