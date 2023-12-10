@@ -10,9 +10,15 @@ namespace sog;
 
 public partial class MainWindow : Window, INotifyPropertyChanged
 {
+    /*
+
+    Partial class of MainWindow containing the CommandDispatcher-related UI callbacks and helper functions.
+
+    */
 
     private void RouteCommands()
     {
+        // Associate the commands with their corresponding UI callbacks
         CommandDispatcher.RouteCommand("exit", HandleExit);
         CommandDispatcher.RouteCommand("help", HandleHelp);
         CommandDispatcher.RouteCommand("contents", HandleContents);
@@ -23,11 +29,14 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
     private void HandleExit(string[] args)
     {
+        // Close the window when the user says 'exit'
         Close();
     }
 
     private void HandleHelp(string[] args)
     {
+        // Open the HelperWindow when the user says 'help'
+
         bool oldDoListen = DoListen;
 
         DoListen = false;
@@ -38,12 +47,15 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
     private void HandleContents(string[] args)
     {
+        // Open the ContentsWindow (table of contents) when the user says 'contents'
         ContentsWindow window = new ContentsWindow(Recognizer, Bible);
         window.ShowDialog();
     }
 
     private void HandleVoiceSearch(string[] args)
     {
+        // Load a page in the Bible corresponding to a PageKey (Bible-Chapter-Verse location)
+
         List<string> bookNames = Bible.books.Select(book => book.book.ToLower().Replace(" ", "")).ToList();
 
         if (CurrentPageKey is not null)
@@ -75,6 +87,8 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
     private void HandleNextPage(string[] args)
     {
+        // Go forward n pages
+
         int n = 1;
 
         if (args.Length == 1)
@@ -88,6 +102,8 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
     private void HandleBackPage(string[] args)
     {
+        // Go back n pages
+
         int n = 1;
 
         if (args.Length == 1)
