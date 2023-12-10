@@ -38,6 +38,8 @@ public class PageKey
 
 public partial class MainWindow : Window, INotifyPropertyChanged
 {
+    SpeechRecognitionEngine Recognizer = new SpeechRecognitionEngine();
+
     private void HandleSearch(string[] args)
     {
         if (CurrentPageKey is not null)
@@ -96,14 +98,13 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
             string text = "Invalid command";
 
-            SpeechRecognitionEngine recognizer = new SpeechRecognitionEngine();
             Grammar dictationGrammar = new DictationGrammar();
-            recognizer.LoadGrammar(dictationGrammar);
+            Recognizer.LoadGrammar(dictationGrammar);
 
             try
             {
-                recognizer.SetInputToDefaultAudioDevice();
-                RecognitionResult result = recognizer.Recognize();
+                Recognizer.SetInputToDefaultAudioDevice();
+                RecognitionResult result = Recognizer.Recognize();
 
                 text = result.Text.ToLower();
 
@@ -130,8 +131,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
             }
             finally
             {
-                recognizer.UnloadAllGrammars();
-                recognizer.Dispose();
+                Recognizer.UnloadAllGrammars();
             }
         }
     }

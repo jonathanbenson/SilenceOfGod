@@ -28,8 +28,12 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
     private void HandleHelp(string[] args)
     {
-        HelpWindow window = new HelpWindow();
+        bool oldDoListen = DoListen;
+
+        DoListen = false;
+        HelpWindow window = new HelpWindow(Recognizer);
         window.ShowDialog();
+        DoListen = oldDoListen;
     }
 
     private void HandleContents(string[] args)
