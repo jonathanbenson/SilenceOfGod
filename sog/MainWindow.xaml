@@ -83,8 +83,11 @@
                 </DockPanel>
             </StackPanel>
 
-            <StackPanel Height="65" x:Name="VoiceControls" Visibility="Collapsed" DockPanel.Dock="Bottom">
-                <TextBlock Text="{Binding VoiceMessage}" />
+            <StackPanel x:Name="VoiceControls" Visibility="Collapsed" DockPanel.Dock="Bottom">
+                <Separator Width="150" />
+                <Grid Height="65">
+                    <TextBlock TextWrapping="Wrap" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding VoiceMessage}" />
+                </Grid>
             </StackPanel>
 
             <StackPanel x:Name="PageContainer" Margin="15,10,15,10">
