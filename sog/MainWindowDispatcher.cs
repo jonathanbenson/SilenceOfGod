@@ -2,6 +2,9 @@ using System;
 using System.Windows;
 using System.ComponentModel;
 using sog.src;
+using System.Linq;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace sog;
 
@@ -13,7 +16,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         CommandDispatcher.RouteCommand("exit", HandleExit);
         CommandDispatcher.RouteCommand("help", HandleHelp);
         CommandDispatcher.RouteCommand("contents", HandleContents);
-        CommandDispatcher.RouteCommand("search", HandleSearch);
+        CommandDispatcher.RouteCommand("search", HandleVoiceSearch);
         CommandDispatcher.RouteCommand("next", HandleNextPage);
         CommandDispatcher.RouteCommand("back", HandleBackPage);
     }
@@ -35,10 +38,30 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         window.ShowDialog();
     }
 
-    private void HandleSearch(string[] args)
+    private void HandleVoiceSearch(string[] args)
     {
+        List<string> bookNames = Bible.books.Select(book => book.book.ToLower().Replace(" ", "")).ToList();
+
         if (CurrentPageKey is not null)
-            CurrentPageKey = new PageKey(Convert.ToInt32(args[0]), Convert.ToInt32(args[1]), Convert.ToInt32(args[2]));
+        {
+            List<string> newArgs = args.ToList();
+
+            if (args.Length > 1 && Regex.IsMatch(args[0], @"^\d+$"))
+            {
+                newArgs.Add(args[0] + args[1]);
+
+                if (args.Length > 2)
+                    for (int i = 2; i < args.Length; i++)
+                        newArgs.Add(args[i]);
+            }
+
+            if (args.Length == 1)
+                CurrentPageKey = new PageKey(bookNames.FindIndex(e => e == newArgs[0]), 0, 0);
+            else if (args.Length == 2)
+                CurrentPageKey = new PageKey(bookNames.FindIndex(e => e == newArgs[0]), Convert.ToInt32(args[1]) - 1, 0);
+            else if (args.Length == 4)
+                CurrentPageKey = new PageKey(bookNames.FindIndex(e => e == newArgs[0]), Convert.ToInt32(args[1]) - 1, Convert.ToInt32(args[3]) - 1);
+        }
 
         LoadPage(CurrentPageKey);
     }

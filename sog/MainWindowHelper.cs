@@ -38,6 +38,13 @@ public class PageKey
 
 public partial class MainWindow : Window, INotifyPropertyChanged
 {
+    private void HandleSearch(string[] args)
+    {
+        if (CurrentPageKey is not null)
+            CurrentPageKey = new PageKey(Convert.ToInt32(args[0]), Convert.ToInt32(args[1]), Convert.ToInt32(args[2]));
+
+        LoadPage(CurrentPageKey);
+    }
 
     private void AddPageKey(List<Verse> page, int bookIndex, int chapterIndex, int startVerseIndex, int endVerseIndex)
     {
