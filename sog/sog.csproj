@@ -16,6 +16,11 @@
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
   </ItemGroup>
+  <ItemGroup>
+      <Content Include="res\**">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Speech" Version="8.0.0" />
