@@ -26,6 +26,7 @@ The project is organized into three main directories:
 To use Silence of God, follow these steps:
 
 1. **Launch the Application**: Start the application from the `sog` directory with the `dotnet run` command.
+    - Must be run with Windows and .NET 6.0
 2. **Enter Voice Mode**: On the application's main screen, activate voice mode to start using voice commands.
 3. **Start Listening**: Say 'start' for the program to begin listening to your commands.
 4. **Stop Listening**: Say 'stop' for the program to stop listning to your commands, or simply deactivate voice mode in top left.
