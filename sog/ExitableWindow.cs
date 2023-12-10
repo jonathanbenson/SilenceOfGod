@@ -8,6 +8,11 @@ namespace sog
 {
     public abstract class ExitableWindow : Window
     {
+        /*
+
+        This is a base class for windows that can be exited by saying 'exit'
+
+        */
 
         private SpeechRecognitionEngine Recognizer;
 
@@ -19,6 +24,7 @@ namespace sog
 
             Recognizer = recognizer;
 
+            // Listen in the background
             ListenerThread = new Thread(Listen)
             {
                 IsBackground = true
@@ -41,6 +47,7 @@ namespace sog
 
                     string text = result.Text.ToLower();
 
+                    // If the user said 'exit', then break out of the loop so the window can be closed
                     if (text == "exit")
                         break;
                 }
@@ -54,6 +61,7 @@ namespace sog
                 }
             }
 
+            // Close the window
             Dispatcher.Invoke(() => Close());
         }
     }

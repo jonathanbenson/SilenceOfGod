@@ -22,6 +22,7 @@ namespace sog
 
             ContentsItemsControl.ItemsSource = Books;
 
+            // Prepare the data for the table of contents
             List<string> contentsEntries = new List<string>();
 
             int colCount = bible.books.Count / 3;
