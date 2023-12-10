@@ -3,6 +3,12 @@ namespace sog.src;
 
 public class Verse
 {
+    /*
+
+    A class to contain Verse information associated with Bible data
+
+    */
+
     public string verse { get; set; }
     public string text { get; set; }
 

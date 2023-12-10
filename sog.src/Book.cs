@@ -4,6 +4,12 @@ namespace sog.src;
 
 public class Book
 {
+    /*
+
+    A class to contain Book information associated with Bible data
+
+    */
+
     public string book { get; set; }
     public List<Chapter> chapters { get; set; }
 

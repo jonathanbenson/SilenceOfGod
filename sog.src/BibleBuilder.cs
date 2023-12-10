@@ -6,6 +6,12 @@ namespace sog.src;
 
 public class BibleBuilder
 {
+    /*
+
+    A class to help parse Bible data
+
+    */
+
     public Bible Build(string source)
     {
 
