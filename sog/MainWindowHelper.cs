@@ -18,6 +18,12 @@ namespace sog;
 
 public class PageKey
 {
+    /*
+
+    A class to represent Book-Chapter-Verse locations in the Bible
+
+    */
+
     public int BookIndex { get; set; }
     public int ChapterIndex { get; set; }
     public int VerseIndex { get; set; }
@@ -32,16 +38,25 @@ public class PageKey
 
     public override string ToString()
     {
+        // To be used as a key in dictionaries
         return $"{BookIndex}-{ChapterIndex}-{VerseIndex}";
     }
 }
 
 public partial class MainWindow : Window, INotifyPropertyChanged
 {
+    /*
+
+    Partial class of MainWindow containing helper methods
+
+    */
+
     SpeechRecognitionEngine Recognizer = new SpeechRecognitionEngine();
 
     private void HandleSearch(string[] args)
     {
+        // Search for a Book-Chapter-Verse location in the Bible and load the page associated with that location
+
         if (CurrentPageKey is not null)
             CurrentPageKey = new PageKey(Convert.ToInt32(args[0]), Convert.ToInt32(args[1]), Convert.ToInt32(args[2]));
 
@@ -50,6 +65,8 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
     private void AddPageKey(List<Verse> page, int bookIndex, int chapterIndex, int startVerseIndex, int endVerseIndex)
     {
+        // Associate a page's verses as PageKeys with their corersponding page
+
         PageKey pk1 = new PageKey(bookIndex, chapterIndex, startVerseIndex);
         PageKeys.Add(pk1);
 
@@ -64,6 +81,8 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
     private void LoadPage(PageKey? pageKey)
     {
+        // Render the page (list of verses) associated with a PageKey (Book-Chapter-Verse location) on to the screen
+
         Dispatcher.Invoke(() => {
             if (pageKey is not null)
             {
@@ -79,12 +98,20 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
     private void Listen()
     {
+        /*
+
+        Function thread to listen for commands and call their corresponding UI callbacks.
+
+        */
+
         bool isAcceptingCommands = false;
 
         while (true)
         {
+            // Ask the MainWindow if its time to exit
             if (DoExitListenerThread)
                 break;
+            // Ask the MainWindow if should listen
             else if (!DoListen)
             {
                 Thread.Sleep(1000);
@@ -106,28 +133,34 @@ public partial class MainWindow : Window, INotifyPropertyChanged
                 Recognizer.SetInputToDefaultAudioDevice();
                 RecognitionResult result = Recognizer.Recognize();
 
+                // Retrieve the string of text associated with the user's speech
                 text = result.Text.ToLower();
 
                 if (isAcceptingCommands)
                 {
+                    // Stop listening to commands if the user says 'stop'
                     if (text == "stop")
                         isAcceptingCommands = false;
+                    // Call the appropriate UI callback if a user said a valid command
                     else
                         Dispatcher.Invoke(() => CommandDispatcher.Dispatch(text) );
                 }
+                // Start listening to commands if the user said 'start'
                 else if (text == "start")
                     isAcceptingCommands = true;
 
             }
             catch (InvalidOperationException)
             {
-                VoiceMessage = "Could not recognize input from default aduio device. Try changing your microphone and restart the application.";
-                Thread.Sleep(1000);
+                // The audio device could not be recognized
+                VoiceMessage = "Could not recognize input from default audio device. Try changing your microphone and restart the application.";
+                Thread.Sleep(2000);
             }
             catch (Exception)
             {
+                // The user said an invalid command
                 VoiceMessage = $"Invalid command: '{text}'";
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
             }
             finally
             {
