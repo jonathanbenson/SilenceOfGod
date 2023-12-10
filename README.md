@@ -9,6 +9,10 @@
 
 Silence of God is a prototypical application designed to enable users to read the King James Bible using voice commands. Developed using Microsoft .NET WPF, this application offers an innovative and interactive way to engage with the scriptures. The logo was generated with OpenAI's DALLE-3.
 
+<p align="center">
+    <img src="docs/sog-demo.png" alt="drawing" width="300"/>
+</p>
+
 ## Project Structure
 
 The project is organized into three main directories:
@@ -38,8 +42,8 @@ Here are some key voice commands to interact with the application:
   - "search Matthew 1" navigates to Matthew 1:1
   - "search John 3 verse 16" navigates to John 3:16
   - "search First Corinthians 15 verse 1" navigates to 1 Corinthians 15:1
-- **next {n}**: Go forward 'n' pages. For instance, "next 5" goes forward 5 pages.
-- **back {n}**: Go back 'n' pages. For example, "back 5" goes backwards 5 pages.
+- **next {n}**: Go forward 'n' pages. For instance, "next" turns to the next page while "next 5" goes forward 5 pages.
+- **back {n}**: Go back 'n' pages. For example, "back" turns to the previous page while "back 5" goes backwards 5 pages.
 
 
 ## Sources
