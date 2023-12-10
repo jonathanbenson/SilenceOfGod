@@ -31,11 +31,11 @@
         </StackPanel>
         <StackPanel Margin="15,10,0,10">
             <TextBlock TextWrapping="Wrap" FontWeight="Bold" FontSize="16">next {n}</TextBlock>
-            <TextBlock TextWrapping="Wrap" FontSize="16">Go forward n pages</TextBlock>
+            <TextBlock TextWrapping="Wrap" FontSize="16">Go forward n pages. *n is optional and will default to 1 if not supplied</TextBlock>
         </StackPanel>
         <StackPanel Margin="15,10,0,10">
-            <TextBlock TextWrapping="Wrap" FontWeight="Bold" FontSize="16">last {n}</TextBlock>
-            <TextBlock TextWrapping="Wrap" FontSize="16">Go backwards n pages</TextBlock>
+            <TextBlock TextWrapping="Wrap" FontWeight="Bold" FontSize="16">back {n}</TextBlock>
+            <TextBlock TextWrapping="Wrap" FontSize="16">Go backwards n pages. *n is optional and will default to 1 if not supplied</TextBlock>
         </StackPanel>
     </StackPanel>
 </DockPanel>

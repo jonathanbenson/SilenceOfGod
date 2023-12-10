@@ -15,7 +15,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         CommandDispatcher.RouteCommand("contents", HandleContents);
         CommandDispatcher.RouteCommand("search", HandleSearch);
         CommandDispatcher.RouteCommand("next", HandleNextPage);
-        CommandDispatcher.RouteCommand("last", HandleLastPage);
+        CommandDispatcher.RouteCommand("back", HandleBackPage);
     }
 
     private void HandleExit(string[] args)
@@ -45,7 +45,10 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
     private void HandleNextPage(string[] args)
     {
-        int n = Convert.ToInt32(args[0]);
+        int n = 1;
+
+        if (args.Length == 1)
+            n = Convert.ToInt32(args[0]);
 
         if (CurrentPageKey is not null && PageKeyIndexLookup[CurrentPageKey.ToString()] < PageKeys.Count - n)
             CurrentPageKey = PageKeys[PageKeyIndexLookup[CurrentPageKey.ToString()] + n];
@@ -53,9 +56,12 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         LoadPage(CurrentPageKey);
     }
 
-    private void HandleLastPage(string[] args)
+    private void HandleBackPage(string[] args)
     {
-        int n = Convert.ToInt32(args[0]);
+        int n = 1;
+
+        if (args.Length == 1)
+            n = Convert.ToInt32(args[0]);
 
         if (CurrentPageKey is not null && PageKeyIndexLookup[CurrentPageKey.ToString()] >= n)
             CurrentPageKey = PageKeys[PageKeyIndexLookup[CurrentPageKey.ToString()] - n];

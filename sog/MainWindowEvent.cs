@@ -72,9 +72,9 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         HandleNextPage(new string[] { "1" });
     }
 
-    private void HandleLastPageButtonClicked(object sender, RoutedEventArgs e)
+    private void HandleBackPageButtonClicked(object sender, RoutedEventArgs e)
     {
-        HandleLastPage(new string[] { "1" });
+        HandleBackPage(new string[] { "1" });
     }
 
     private void HandleSpeechRecognitionTestButtonClicked(object sender, RoutedEventArgs e)
