@@ -48,19 +48,22 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
             if (args.Length > 1 && Regex.IsMatch(args[0], @"^\d+$"))
             {
-                newArgs.Add(args[0] + args[1]);
+                newArgs = new List<string>
+                {
+                    args[0] + args[1]
+                };
 
                 if (args.Length > 2)
                     for (int i = 2; i < args.Length; i++)
                         newArgs.Add(args[i]);
             }
 
-            if (args.Length == 1)
+            if (newArgs.Count == 1)
                 CurrentPageKey = new PageKey(bookNames.FindIndex(e => e == newArgs[0]), 0, 0);
-            else if (args.Length == 2)
-                CurrentPageKey = new PageKey(bookNames.FindIndex(e => e == newArgs[0]), Convert.ToInt32(args[1]) - 1, 0);
-            else if (args.Length == 4)
-                CurrentPageKey = new PageKey(bookNames.FindIndex(e => e == newArgs[0]), Convert.ToInt32(args[1]) - 1, Convert.ToInt32(args[3]) - 1);
+            else if (newArgs.Count == 2)
+                CurrentPageKey = new PageKey(bookNames.FindIndex(e => e == newArgs[0]), Convert.ToInt32(newArgs[1]) - 1, 0);
+            else if (newArgs.Count == 4)
+                CurrentPageKey = new PageKey(bookNames.FindIndex(e => e == newArgs[0]), Convert.ToInt32(newArgs[1]) - 1, Convert.ToInt32(newArgs[3]) - 1);
         }
 
         LoadPage(CurrentPageKey);
