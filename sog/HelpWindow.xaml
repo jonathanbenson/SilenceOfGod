@@ -9,21 +9,25 @@
         Title="Help" Height="800" Width="600" MinHeight="800" MinWidth="600" MaxHeight="800" MaxWidth="600">
 
 <DockPanel>
-    <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0,10,0,10" FontSize="24">Help</TextBlock>
+    <StackPanel DockPanel.Dock="Top" Margin="0,10,0,10">
+        <TextBlock HorizontalAlignment="Center" FontSize="24" TextDecorations="Underline">Introduction</TextBlock>
+        <TextBlock TextWrapping="Wrap" FontSize="16" Margin="15,10,15,0">Silence of God is an application that allows users to read the King James Bible using only their voice. Upon entering voice mode, say 'start' for the program to start listening for the commands below. Say 'stop' for the program to stop listening to commands.</TextBlock>
+    </StackPanel>
     <StackPanel>
-        <StackPanel Margin="15,10,0,10">
+        <TextBlock HorizontalAlignment="Center" Margin="0,10,0,10" FontSize="24" TextDecorations="Underline">Voice Commands</TextBlock>
+        <StackPanel Margin="15,10,15,10">
             <TextBlock TextWrapping="Wrap" FontWeight="Bold" FontSize="16">exit</TextBlock>
             <TextBlock TextWrapping="Wrap" FontSize="16">Close the current window</TextBlock>
         </StackPanel>
-        <StackPanel Margin="15,10,0,10">
+        <StackPanel Margin="15,10,15,10">
             <TextBlock TextWrapping="Wrap" FontWeight="Bold" FontSize="16">help</TextBlock>
             <TextBlock TextWrapping="Wrap" FontSize="16">Open up a helpful window for instructions</TextBlock>
         </StackPanel>
-        <StackPanel Margin="15,10,0,10">
+        <StackPanel Margin="15,10,15,10">
             <TextBlock TextWrapping="Wrap" FontWeight="Bold" FontSize="16">contents</TextBlock>
             <TextBlock TextWrapping="Wrap" FontSize="16">Open the table of contents</TextBlock>
         </StackPanel>
-        <StackPanel Margin="15,10,0,10">
+        <StackPanel Margin="15,10,15,10">
             <TextBlock TextWrapping="Wrap" FontWeight="Bold" FontSize="16">search {book} {chapter} verse {verse}</TextBlock>
             <TextBlock TextWrapping="Wrap" FontSize="16">Navigate to a specific verse</TextBlock>
             <TextBlock FontStyle="Italic" TextWrapping="Wrap" FontSize="16">... "search Genesis" to navigate to Genesis 1:1</TextBlock>
@@ -31,13 +35,13 @@
             <TextBlock FontStyle="Italic" TextWrapping="Wrap" FontSize="16">... "search John 3 verse 16" to navigate to John 3:16</TextBlock>
             <TextBlock FontStyle="Italic" TextWrapping="Wrap" FontSize="16">... "search First Corinthians 15 verse 1" to navigate to 1 Corinthians 15:1</TextBlock>
         </StackPanel>
-        <StackPanel Margin="15,10,0,10">
+        <StackPanel Margin="15,10,15,10">
             <TextBlock TextWrapping="Wrap" FontWeight="Bold" FontSize="16">next {n}</TextBlock>
             <TextBlock TextWrapping="Wrap" FontSize="16">Go forward n pages</TextBlock>
             <TextBlock FontStyle="Italic" TextWrapping="Wrap" FontSize="16">... "next" to go to the next page</TextBlock>
             <TextBlock FontStyle="Italic" TextWrapping="Wrap" FontSize="16">... "next 5" to go foward 5 pages</TextBlock>
         </StackPanel>
-        <StackPanel Margin="15,10,0,10">
+        <StackPanel Margin="15,10,15,10">
             <TextBlock TextWrapping="Wrap" FontWeight="Bold" FontSize="16">back {n}</TextBlock>
             <TextBlock FontStyle="Italic" TextWrapping="Wrap" FontSize="16">... "back" to go to the previous page</TextBlock>
             <TextBlock FontStyle="Italic" TextWrapping="Wrap" FontSize="16">... "back 5" to go backwards 5 pages</TextBlock>
