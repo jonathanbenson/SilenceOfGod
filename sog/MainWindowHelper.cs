@@ -112,7 +112,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
                     if (text == "stop")
                         isAcceptingCommands = false;
                     else
-                        CommandDispatcher.Dispatch(text);
+                        Dispatcher.Invoke(() => CommandDispatcher.Dispatch(text) );
                 }
                 else if (text == "start")
                     isAcceptingCommands = true;
