@@ -24,18 +24,23 @@
             <TextBlock TextWrapping="Wrap" FontSize="16">Open the table of contents</TextBlock>
         </StackPanel>
         <StackPanel Margin="15,10,0,10">
-            <TextBlock TextWrapping="Wrap" FontWeight="Bold" FontSize="16">search {book} {chapter} {verse}</TextBlock>
+            <TextBlock TextWrapping="Wrap" FontWeight="Bold" FontSize="16">search {book} {chapter} verse {verse}</TextBlock>
             <TextBlock TextWrapping="Wrap" FontSize="16">Navigate to a specific verse</TextBlock>
-            <TextBlock FontStyle="Italic" TextWrapping="Wrap" FontSize="16">Example 1: "search John three sixteen" to navigate to John 3:16</TextBlock>
-            <TextBlock FontStyle="Italic" TextWrapping="Wrap" FontSize="16">Example 2: "search First Corinthians fifteen one" to navigate to 1 Corinthians 15:1</TextBlock>
+            <TextBlock FontStyle="Italic" TextWrapping="Wrap" FontSize="16">... "search Genesis" to navigate to Genesis 1:1</TextBlock>
+            <TextBlock FontStyle="Italic" TextWrapping="Wrap" FontSize="16">... "search Matthew 1" to navigate to Matthew 1:1</TextBlock>
+            <TextBlock FontStyle="Italic" TextWrapping="Wrap" FontSize="16">... "search John 3 verse 16" to navigate to John 3:16</TextBlock>
+            <TextBlock FontStyle="Italic" TextWrapping="Wrap" FontSize="16">... "search First Corinthians 15 verse 1" to navigate to 1 Corinthians 15:1</TextBlock>
         </StackPanel>
         <StackPanel Margin="15,10,0,10">
             <TextBlock TextWrapping="Wrap" FontWeight="Bold" FontSize="16">next {n}</TextBlock>
-            <TextBlock TextWrapping="Wrap" FontSize="16">Go forward n pages. *n is optional and will default to 1 if not supplied</TextBlock>
+            <TextBlock TextWrapping="Wrap" FontSize="16">Go forward n pages</TextBlock>
+            <TextBlock FontStyle="Italic" TextWrapping="Wrap" FontSize="16">... "next" to go to the next page</TextBlock>
+            <TextBlock FontStyle="Italic" TextWrapping="Wrap" FontSize="16">... "next 5" to go foward 5 pages</TextBlock>
         </StackPanel>
         <StackPanel Margin="15,10,0,10">
             <TextBlock TextWrapping="Wrap" FontWeight="Bold" FontSize="16">back {n}</TextBlock>
-            <TextBlock TextWrapping="Wrap" FontSize="16">Go backwards n pages. *n is optional and will default to 1 if not supplied</TextBlock>
+            <TextBlock FontStyle="Italic" TextWrapping="Wrap" FontSize="16">... "back" to go to the previous page</TextBlock>
+            <TextBlock FontStyle="Italic" TextWrapping="Wrap" FontSize="16">... "back 5" to go backwards 5 pages</TextBlock>
         </StackPanel>
     </StackPanel>
 </DockPanel>
