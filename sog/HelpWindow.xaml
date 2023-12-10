@@ -13,6 +13,7 @@
         <TextBlock HorizontalAlignment="Center" FontSize="24" TextDecorations="Underline">Introduction</TextBlock>
         <TextBlock TextWrapping="Wrap" FontSize="16" Margin="15,10,15,0">Silence of God is an application that allows users to read the King James Bible using only their voice. Upon entering voice mode, say 'start' for the program to start listening for the commands below. Say 'stop' for the program to stop listening to commands.</TextBlock>
     </StackPanel>
+    <TextBlock DockPanel.Dock="Bottom" HorizontalAlignment="Center" FontSize="12" Margin="0, 10, 0, 15">Say 'exit' to close this window</TextBlock>
     <StackPanel>
         <TextBlock HorizontalAlignment="Center" Margin="0,10,0,10" FontSize="24" TextDecorations="Underline">Voice Commands</TextBlock>
         <StackPanel Margin="15,10,15,10">
