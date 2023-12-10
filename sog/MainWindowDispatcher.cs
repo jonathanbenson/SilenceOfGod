@@ -38,7 +38,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
     private void HandleContents(string[] args)
     {
-        ContentsWindow window = new ContentsWindow(Bible);
+        ContentsWindow window = new ContentsWindow(Recognizer, Bible);
         window.ShowDialog();
     }
 

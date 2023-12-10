@@ -119,12 +119,12 @@ public partial class MainWindow : Window, INotifyPropertyChanged
                     isAcceptingCommands = true;
 
             }
-            catch (InvalidOperationException e)
+            catch (InvalidOperationException)
             {
                 VoiceMessage = "Could not recognize input from default aduio device. Try changing your microphone and restart the application.";
                 Thread.Sleep(1000);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 VoiceMessage = $"Invalid command: '{text}'";
                 Thread.Sleep(1000);

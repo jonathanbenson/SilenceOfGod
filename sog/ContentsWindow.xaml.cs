@@ -4,21 +4,21 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Speech.Recognition;
 using System.Windows;
 using sog.src.model;
 
 namespace sog
 {
-    public partial class ContentsWindow : Window
+    public partial class ContentsWindow : ExitableWindow
     {
         public ObservableCollection<string> Books = new ObservableCollection<string>();
 
-        public ContentsWindow(Bible bible)
+        public ContentsWindow(SpeechRecognitionEngine recognizer, Bible bible) : base(recognizer)
         {
             InitializeComponent();
 
             DataContext = this;
-
 
             ContentsItemsControl.ItemsSource = Books;
 
