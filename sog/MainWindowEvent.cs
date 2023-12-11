@@ -27,10 +27,14 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     {
         // When the voice mode is turned on...
         // Show the voice controls and hide the non-voice controls, and listen for commands
-        VoiceControls.Visibility = Visibility.Visible;
-        NonVoiceControls.Visibility = Visibility.Collapsed;
 
-        DoListen = true;
+        if (CurrentPageKey is not null)
+        {
+            VoiceControls.Visibility = Visibility.Visible;
+            NonVoiceControls.Visibility = Visibility.Collapsed;
+
+            DoListen = true;
+        }
     }
 
     private void HandleVoiceModeUnchecked(object sender, RoutedEventArgs e)
@@ -166,6 +170,8 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         // Hide the loading content and show the main content
         LoadingContent.Visibility = Visibility.Hidden;
         MainContent.Visibility = Visibility.Visible;
+
+        DoListen = true;
     }
 
 

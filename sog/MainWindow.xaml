@@ -25,7 +25,7 @@
             <Grid DockPanel.Dock="Top">
 
                 <CheckBox x:Name="VoiceMode"
-                    IsChecked="False"
+                    IsChecked="True"
                     HorizontalAlignment="Left"
                     Checked="HandleVoiceModeChecked"
                     Unchecked="HandleVoiceModeUnchecked"
@@ -46,7 +46,7 @@
                 </WrapPanel>
             </Grid>
 
-            <StackPanel Height="65" x:Name="NonVoiceControls" DockPanel.Dock="Bottom">
+            <StackPanel Height="65" x:Name="NonVoiceControls" Visibility="Collapsed" DockPanel.Dock="Bottom">
 
                 <Separator Width="150" />
 
@@ -85,7 +85,7 @@
                 </DockPanel>
             </StackPanel>
 
-            <StackPanel x:Name="VoiceControls" Visibility="Collapsed" DockPanel.Dock="Bottom">
+            <StackPanel x:Name="VoiceControls" DockPanel.Dock="Bottom">
                 <Separator Width="150" />
                 <Grid Height="65">
                     <TextBlock TextWrapping="Wrap" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding VoiceMessage}" />
