@@ -58,6 +58,8 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
         List<string> bookNames = Bible.books.Select(book => book.book.ToLower().Replace(" ", "")).ToList();
 
+        PageKey newPageKey = new PageKey(0, 0, 0);
+
         if (CurrentPageKey is not null)
         {
             List<string> newArgs = args.ToList();
@@ -75,12 +77,15 @@ public partial class MainWindow : Window, INotifyPropertyChanged
             }
 
             if (newArgs.Count == 1)
-                CurrentPageKey = new PageKey(bookNames.FindIndex(e => e == newArgs[0]), 0, 0);
+                newPageKey = new PageKey(bookNames.FindIndex(e => e == newArgs[0]), 0, 0);
             else if (newArgs.Count == 2)
-                CurrentPageKey = new PageKey(bookNames.FindIndex(e => e == newArgs[0]), Convert.ToInt32(newArgs[1]) - 1, 0);
+                newPageKey = new PageKey(bookNames.FindIndex(e => e == newArgs[0]), Convert.ToInt32(newArgs[1]) - 1, 0);
             else if (newArgs.Count == 4)
-                CurrentPageKey = new PageKey(bookNames.FindIndex(e => e == newArgs[0]), Convert.ToInt32(newArgs[1]) - 1, Convert.ToInt32(newArgs[3]) - 1);
+                newPageKey = new PageKey(bookNames.FindIndex(e => e == newArgs[0]), Convert.ToInt32(newArgs[1]) - 1, Convert.ToInt32(newArgs[3]) - 1);
         }
+
+        if (PageKeyIndexLookup.ContainsKey(newPageKey.ToString()))
+            CurrentPageKey = newPageKey;
 
         LoadPage(CurrentPageKey);
     }
